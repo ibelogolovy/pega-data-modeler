@@ -1,0 +1,50 @@
+[role=main] {
+    display: grid;
+    grid-template-columns: 10% 85% 5%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "navigation header ."
+    "navigation main . "
+    "navigation footer .";
+}
+
+[role=main] .content {
+      grid-area: main;
+}
+
+.navigation {
+    grid-area: navigation;
+    position: fixed;
+    width: 7vw;
+    height: 100vh;
+    transition: .3s;
+    background-color: #EF3124;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+}
+
+.navigation .panel {
+    width: 7vw;
+}
+
+.navigation.expand {
+    width: 100vw;
+    transition: .5s;
+    z-index: -1;
+}
+
+.page-header {
+    grid-area: header;
+    display: inline-block;
+    color: rgba(11, 31, 53, .95);
+    margin: 40px 0 16px;
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 700;
+    width: 100%;
+    margin: 3% 0 2% 0;
+    font-family: -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Roboto Rouble', sans-serif;
+}
+
+.hidden {
+    display: none;
+}

@@ -1,0 +1,16 @@
+.form-inline .input {
+    margin: 10px;
+}
+
+.form-inline div.select {
+    margin: 10px;
+
+}
+
+.form-inline {
+    display: flex;
+}
+
+.form-inline button {
+align-self: center;
+}

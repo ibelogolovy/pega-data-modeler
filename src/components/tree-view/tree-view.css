@@ -1,0 +1,79 @@
+/* tree basic start */
+
+.node {
+    padding: 5px;
+}
+
+.tree {
+    box-shadow:0 6px 14px rgba(11,31,53,.15);
+}
+
+/* tre basic end*/
+
+.tree .page > .name {
+    display: flex;
+}
+
+.tree div.node > div.node {
+    padding-left: 1em;
+}
+
+.tree .page .hidden  {
+      display:none;
+}
+
+.tree .page {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(11,31,53,.1);
+}
+
+
+/* property styles start*/
+
+.tree .node .property {
+    display: flex;
+}
+
+.tree .node .property.searched {
+    color: #EF3124;
+    
+}
+
+.tree .node .property.hidden {
+    display: none;
+}
+
+.tree .node .property:hover {
+    background-color: rgba(11, 31, 53, .07);
+}
+
+.tree .node .property .name {
+    width: 50%;
+    padding-left: 25px;
+    font-weight: 400;
+}
+
+.tree .node .property .value {
+    width: 50%;
+    overflow:hidden;
+    font-weight: 300;
+}
+
+/* property styles end */
+
+/* page styles start*/
+
+/* page styles end */
+
+.tree .collapse-btn {
+    width: 15px;
+    padding-right: 10px;
+}
+
+.tree .collapse-btn img {
+    max-width: 100%;
+    transform: rotate(180deg);
+}
+.tree .collapse-btn.collapse img {
+    transform: rotate(90deg);
+}

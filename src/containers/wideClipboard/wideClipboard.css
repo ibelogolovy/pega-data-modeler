@@ -1,0 +1,18 @@
+.wide-clipboard .tree-explorer {
+    display: inline-block;
+    width: 40%;
+    height: 100%;
+    margin: 1%;
+}
+
+.wide-clipboard .property-explorer {
+    display: inline-block;
+    width: 50%;
+    position: fixed;
+    height: 100%;
+    margin: 1%;
+}
+
+.inline {
+    display: inline;
+}
