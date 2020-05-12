@@ -1,0 +1,31 @@
+.case-model {
+    height: 100%;
+}
+
+.case-model .obj-name {
+    font-family: sans-serif;
+    font-size:12px;
+    text-align: center;
+    margin: 10px;
+    overflow: hidden;
+    font-weight: bolder;
+}
+
+.case-model .obj-class {
+    font-family: sans-serif;
+    font-size:9px;
+    text-align: center;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.case-model .block {
+    fill:  #ededed;
+    
+}
+
+.case-model .group:hover {
+    stroke-opacity:0.5;
+    stroke:black;
+    stroke-width:1;
+}

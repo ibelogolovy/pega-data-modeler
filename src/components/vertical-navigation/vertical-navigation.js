@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 import './vertical-navigation.css';
 
-const VerticalNavigation = ({ navigationItems, onHomeClick, onItemClick, className="" }) => {
+
+const VerticalNavigation = ({ navigationItems, onHomeClick, onItemClick, className="", sectionOnHoverItemLeft }) => {
     return (
         <div className = {"vertical-navigation " + className}>
             { navigationItems.map(( { name, link, icon, role  }, i) => {
                 return (
-                    
                     <div className= {"menu-item "+ role} key={i}>
                         <Link to={ link } onClick={ role === "home" ? onHomeClick : onItemClick }>
                             <div className="item-icon"> 

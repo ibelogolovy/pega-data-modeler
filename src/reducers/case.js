@@ -38,13 +38,14 @@ const updateSelectedCase= (state, action) => {
     case actionTypes.CASE_PARAM_SETTED:
       return {
         ...state.selectedCase,
-        params: { ...action.payload},
+        params: { ...state.selectedCase.params, ...action.payload },
         loading: false,
         error: false
       };
 
     default:
       return state.selectedCase;
+
   }
 
 };

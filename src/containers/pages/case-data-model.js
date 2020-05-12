@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
-import WideClipboard from '../wideClipboard';
 import CaseSeach from '../../components/case-search';
+import ModelExplorer from '../model-explorer';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,44 +14,22 @@ const CaseDataView = () => {
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
 
-
-    const hideHeaderOnScroll = () => {
-
-        const distanceY = window.pageYOffset || document.documentElement.scrollTop;
-        const shrinkOn =  headerRef.current.className === "hidden" ? 0:190;
-    
-        if (distanceY > shrinkOn ) {
-            headerRef.current.className = "hidden";
-        } else  {
-            headerRef.current.className = "";
-        }
-      };
-
-    useEffect(()=>{
-        window.addEventListener("scroll", hideHeaderOnScroll);
-
-        return () => {
-            window.removeEventListener("scroll", hideHeaderOnScroll)
-        }
-    }, [ headerRef ]);
-    
-
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
     
     return (
-        <div className="page">
+        <div>
             <div ref= {headerRef}>
                 <div className = "page-header">
-                    Case view
+                    Case model view
                 </div>
                 <div className="search">
                     <CaseSeach caseId={ caseId } caseClass={ caseClass } onSubmitAction = { onSubmitSearch }/>
                 </div>
             </div>
             {
-                caseId && caseClass ? <WideClipboard caseKey = { caseId } caseClass = { caseClass } />:null
+                caseId && caseClass ? <ModelExplorer caseKey = { caseId } caseClass = { caseClass } />:null
             }
         </div>
 

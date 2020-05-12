@@ -1,28 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TreeExplorer from '../tree-explorer';
 import PropertyExplorer from '../property-explorer';
 
 import { useDispatch } from 'react-redux';
 
-import { fetchDataPage, caseParamSetted } from '../../actions';
+import { caseParamSetted } from '../../actions';
 
 
 import './wideClipboard.css';
 
-
 const WideClipdoard = ({ caseKey, caseClass }) => {
 
-  const getPropDataPage = 'D_pzGetProperty';
-
+  const [selectedProperty, setSelectedProperty] = useState("");
+  const [selectedPropClass, setSelectedPropClass] = useState("");
+  
   const dispatch = useDispatch();
 
   const onClickNode = ( { name, objClass, nodeRef } ) => {
-    fetchDataPage(getPropDataPage, { PropertyName: name, AppliesToClass: objClass })(dispatch);
+    setSelectedProperty(name);
+    setSelectedPropClass(objClass);
     dispatch(caseParamSetted({ reference: nodeRef }));
   }
-
-  
 
   return (
     <div className="wide-clipboard">
@@ -30,7 +29,7 @@ const WideClipdoard = ({ caseKey, caseClass }) => {
         <TreeExplorer caseKey = { caseKey } caseClass = { caseClass } onClickNode={ onClickNode }/>
       </div>
       <div className = "property-explorer">
-         <PropertyExplorer />
+         <PropertyExplorer property = { selectedProperty } appliesToClass = { selectedPropClass }/>
       </div>
     </div>
   );

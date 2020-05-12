@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 
-import TreeView from '../../components/tree-view';
+// import TreeView from '../../components/tree-view';
 import ErrorIndicator from '../../components/error-indicator';
 import Spinner from '../../components/spinner';
+import CaseModel from '../../components/case-model';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCase } from '../../actions';
 
 
-const TreeExplorer = ({ caseKey = "", caseClass = "", onClickNode }) => {
+const ModelExplorer = ({ caseKey = "", caseClass = "" }) => {
 
   const data = useSelector(state => state.selectedCase.data);
   const loading = useSelector(state => state.selectedCase.loading);
@@ -33,8 +34,8 @@ const TreeExplorer = ({ caseKey = "", caseClass = "", onClickNode }) => {
     return <Spinner/>;
   }
 
-  return <TreeView data = { data } onClickNode = { onClickNode }/>;
+  return <CaseModel data = { data } />;
 
 };
 
-export default TreeExplorer;
+export default ModelExplorer;

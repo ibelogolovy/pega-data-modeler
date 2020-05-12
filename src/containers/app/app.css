@@ -10,6 +10,7 @@
 
 [role=main] .content {
       grid-area: main;
+      z-index: 1;
 }
 
 .navigation {
@@ -29,7 +30,6 @@
 .navigation.expand {
     width: 100vw;
     transition: .5s;
-    z-index: -1;
 }
 
 .page-header {
@@ -47,4 +47,9 @@
 
 .hidden {
     display: none;
+}
+
+@font-face {
+    font-family: 'Bungee Shade';
+    src: local('MyFont'), url(../../fonts/BungeeShade-Regular.woff) format('woff');
 }

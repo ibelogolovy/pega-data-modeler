@@ -2,22 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import './tree-view.css';
 
+import { getPegaName } from '../utils/pega-object';
+
 import collapseBtn from '../../images/collapseButton.png';
-
-
-const formNodeName = (prefix, name) => {
-    if( name === "content") {
-        name = "pyWorkPage"
-    }
-
-    // if has prefix - it is page list of page group item
-    if(typeof prefix === "string" && prefix !== "") {
-        name=Number.parseInt(name)+1;
-        name=prefix+'('+name+')';
-    }
-    
-    return name;
-}
 
 
 const getSearched = (isPage, name, value, search) => {
@@ -36,12 +23,11 @@ const getSearched = (isPage, name, value, search) => {
 const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = "", onClickNode, searchString = "", expandParent=()=>{} }) => {
 
     const [visible, setVisible] = useState( name==="" );
-    // const elementRef = useRef(null);
 
     const isPage = typeof data === 'object';
     const isPageList = Array.isArray(data);
 
-    const nodeName = formNodeName(prefix, name);
+    const nodeName = getPegaName(prefix, name);
     const searchedClass = searchString !== "" ? getSearched(isPage||isPageList, nodeName, data, searchString): null;
 
     const onClickAction = () => {

@@ -5,28 +5,26 @@ import Button from 'arui-feather/button';
 import Form from 'arui-feather/form';
 import Select from 'arui-feather/select';
 
-
-
-
 import './case-search.css';
 
 
-const CaseSearch = ({ onSubmitAction = ()=>{} }) => {
+const CaseSearch = ({ caseId="", caseClass="", onSubmitAction = ()=>{} }) => {
 
-    const [caseId, setCaseId] = useState("");
-    const [caseClass, setCaseClass] = useState("");
+    const [_caseId, _setCaseId] = useState(caseId);
+    const [_caseClass, _setCaseClass] = useState(caseClass);
 
     const classList =  [
         { value: '01', text: 'ABR-FW-OpsFW-Work-Loan-Mortgage' }
     ];
 
     return (
-        <Form className='form-inline' method='get' onSubmit={ () => onSubmitAction({ caseId, caseClass }) }>
+        <Form className='form-inline' method='get' onSubmit={ () => onSubmitAction({ caseId:_caseId, caseClass:_caseClass }) }>
                 <Input
                     label='Case'
+                    value = {_caseId}
                     placeholder='Enter case ID'
                     view='line'
-                    onChange = { ( value ) => setCaseId(value) }
+                    onChange = { ( value ) => _setCaseId(value) }
                     clear={ true }
                     size='m'
                 />
@@ -36,7 +34,7 @@ const CaseSearch = ({ onSubmitAction = ()=>{} }) => {
                         mode='radio'
                         placeholder = 'Enter class name'
                         renderPopupOnFocus={ true }
-                        onChange = { ( value ) => setCaseClass(value) }
+                        onChange = { ( value ) => _setCaseClass(value) }
                         options={ classList }
                     />
         

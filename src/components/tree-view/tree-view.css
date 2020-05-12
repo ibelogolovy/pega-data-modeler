@@ -51,6 +51,7 @@
     width: 50%;
     padding-left: 25px;
     font-weight: 400;
+    word-break: break-word;
 }
 
 .tree .node .property .value {

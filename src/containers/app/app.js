@@ -3,9 +3,13 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 
 
 import VerticalNavigation from '../../components/vertical-navigation';
+
+// pages
 import Home from '../pages/home';
 import CaseDataView from '../pages/case-data-view';
-import Footer from '../../components/footer';
+import CaseDataModel from '../pages/case-data-model';
+
+// import Footer from '../../components/footer';
 
 import { navigationItems } from '../../constants/navigationItems';
 
@@ -18,7 +22,7 @@ const App = () => {
 
     useEffect(()=>{
       setExpandNav(location.pathname==="/" )
-    }, [location]);
+    }, [ location ]);
 
     return (
       <div role="main" >
@@ -38,9 +42,12 @@ const App = () => {
             <Route
                 path="/clipboard"
                 component = { CaseDataView }/>
+            <Route
+                path="/model"
+                component = { CaseDataModel }/>
           </Switch>
         </div>
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     );
 }

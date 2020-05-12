@@ -287,7 +287,7 @@ const getDataPage = (id, params) =>  {
       //   reject(new Error('Something bad happened!'));
       // } else resolve(this.data);
       resolve(testData)
-    }, 10);
+    }, 1000);
   });
 }
 

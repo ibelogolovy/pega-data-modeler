@@ -2,4 +2,51 @@
     grid-area: header;
     display: inline-block;
     color: whitesmoke;
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+            justify-content: center;
+    font-family: "Bungee Shade", cursive;
+    z-index: 0;
+    
 }
+  
+.header .title {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+            justify-content: center;
+    align-content: center;
+    text-align: center;
+    font-weight: normal;
+    width: 100%;
+    text-align: center;
+    font-size: 12vw;
+    background: linear-gradient(-45deg, whitesmoke 25%, #EF3124 25%, #EF3124 50%, whitesmoke 50%, whitesmoke 75%, #EF3124 75%, #EF3124);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 20px 20px;
+    background-position: 0 0;
+    -webkit-animation: stripes 1s linear infinite;
+            animation: stripes 1s linear infinite;
+  }
+  
+  @-webkit-keyframes stripes {
+    100% {
+      background-position: 20px 0, 20px 0, 20px 0;
+    }
+  }
+  
+  @keyframes stripes {
+    100% {
+      background-position: 20px 0, 20px 0, 20px 0;
+    }
+  }
+  
