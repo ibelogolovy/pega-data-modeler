@@ -2641,22 +2641,22 @@ const testData = {
   ] 
   };
 
-const getCase1 = (id) => {
-    return axios
-      .get(encodeURI(endpoints.BASEURL + endpoints.CASES + "/" + id), {
-        headers: {
-          ...authHeader(),
-          "Access-Control-Expose-Headers": "etag"
-        }
-      })
-      .then( response => {
-        response.data["etag"] = response.headers.etag;
-        return response.data;
-      })
-      .catch( error => {
-        return Promise.reject(getError(error));
-      });
-};
+// const getCase = (id) => {
+//     return axios
+//       .get(encodeURI(endpoints.BASEURL + endpoints.CASES + "/" + id), {
+//         headers: {
+//           ...authHeader(),
+//           "Access-Control-Expose-Headers": "etag"
+//         }
+//       })
+//       .then( response => {
+//         response.data["etag"] = response.headers.etag;
+//         return response.data;
+//       })
+//       .catch( error => {
+//         return Promise.reject(getError(error));
+//       });
+// };
 
 const getCase = () =>  {
   return new Promise((resolve, reject) => {

@@ -266,19 +266,19 @@ const testData = {
 }
 };
 
-const getDataPage1 = (id, params) => {
-  return axios
-    .get(endpoints.BASEURL + endpoints.DATA + "/" + id, {
-      headers: authHeader(),
-      params: params
-    })
-    .then(function(response) {
-      return response.data;
-    })
-    .catch(function(error) {
-      return Promise.reject(getError(error));
-    });
-}
+// const getDataPage = (id, params) => {
+//   return axios
+//     .get(endpoints.BASEURL + endpoints.DATA + "/" + id, {
+//       headers: authHeader(),
+//       params: params
+//     })
+//     .then(function(response) {
+//       return response.data;
+//     })
+//     .catch(function(error) {
+//       return Promise.reject(getError(error));
+//     });
+// }
 
 const getDataPage = (id, params) =>  {
   return new Promise((resolve, reject) => {

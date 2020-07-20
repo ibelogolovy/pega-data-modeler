@@ -16,7 +16,7 @@
 .navigation {
     grid-area: navigation;
     position: fixed;
-    width: 7vw;
+    width: 115px;
     height: 100vh;
     transition: .3s;
     background-color: #EF3124;
@@ -24,13 +24,28 @@
 }
 
 .navigation .panel {
-    width: 7vw;
+    width: 115px;
 }
 
 .navigation.expand {
+    display: flex;
     width: 100vw;
     transition: .5s;
 }
+
+.panel > div:hover::after {
+    content: '';
+    position: absolute;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5%;
+    margin-left: 120%;
+    top: 45%;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
 
 .page-header {
     grid-area: header;

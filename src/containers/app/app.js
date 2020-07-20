@@ -9,7 +9,6 @@ import Home from '../pages/home';
 import CaseDataView from '../pages/case-data-view';
 import CaseDataModel from '../pages/case-data-model';
 
-// import Footer from '../../components/footer';
 
 import { navigationItems } from '../../constants/navigationItems';
 
@@ -31,7 +30,8 @@ const App = () => {
                 className = "panel"
                 navigationItems = { navigationItems } 
                 onHomeClick = { () => setExpandNav(true) } 
-                onItemClick = { () => setExpandNav(false) } />
+                onItemClick = { () => setExpandNav(false) } 
+            />
         </div>
         <div className="content">
           <Switch>
@@ -47,7 +47,6 @@ const App = () => {
                 component = { CaseDataModel }/>
           </Switch>
         </div>
-        {/* <Footer/> */}
       </div>
     );
 }

@@ -5,12 +5,12 @@
     flex-direction: column;
     align-items: center;
     color:white;
-    font-size: .8vw;
+    font-size: 12px;
     
 }
 
 .vertical-navigation .item-icon {
-    width: 3vw;
+    width: 40px;
     display: block;
     margin: 0 auto; 
 }

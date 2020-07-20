@@ -2,6 +2,7 @@
   "name": "pega-data-modeler",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "arui-feather": "^17.7.0",
     "axios": "^0.19.2",

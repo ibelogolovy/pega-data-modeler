@@ -6,6 +6,8 @@ const formPegaClassArr = ( data={} , parentName="", parentLinked="", arrayData=[
         
         const isArray = Array.isArray(data[value]);
         const isObject = typeof data[value] === 'object';
+        // default parent linked - needs for pega value and page group
+        const defaultParentLinked =  data[value].hasOwnProperty("pxObjClass") ? "": data["pxObjClass"];
 
         if(isArray){
             return [
@@ -26,7 +28,7 @@ const formPegaClassArr = ( data={} , parentName="", parentLinked="", arrayData=[
         });
 
         return parseInt(existIdx) >= 0 ? [
-            ...formPegaClassArr(data[value], "", "", [
+            ...formPegaClassArr(data[value], "", defaultParentLinked, [
                 ...accumulator.slice(0,existIdx),
                 {   ...accumulator[existIdx],
                     objName: new Set([...accumulator[existIdx].objName, objName]), 
@@ -36,7 +38,7 @@ const formPegaClassArr = ( data={} , parentName="", parentLinked="", arrayData=[
                 ...accumulator.slice(existIdx+1)
             ])
         ] : [
-            ...formPegaClassArr(data[value], "", "", [
+            ...formPegaClassArr(data[value], "", defaultParentLinked, [
                 ...accumulator,
                 { 
                     objName: new Set([objName]),
@@ -71,17 +73,19 @@ const formDataER = ( data={} ) => {
 }
 
 // add coordinates for svg 
-const addCoordinates = (data, elementsInRow, cellSize, blockWidth, blockInterval ) => {
-    return data.map((value, i)=>{
-        
-        let idx = i%4;
-        let x =  idx===0 ? cellSize : 
-                 idx===1 ? idx*(blockWidth+cellSize)+blockInterval :
-                 idx*(blockWidth+blockInterval)+cellSize;
-        let y = cellSize + Math.floor(i/elementsInRow) * cellSize*5;
+const addCoordinates = (data, elementsInRow, cellSize, blockWidth, blockInterval, indent ) => {
+    return data.reduce((accumulator, value, i, array)=>{
+        let idx = i%elementsInRow;
 
-        return {...value, x: x, y: y}
-    })
+        
+        let x =  idx===0 ? indent : 
+                 idx===1 ? idx*(blockWidth+cellSize)+blockInterval :
+                 idx*(blockWidth+blockInterval)+indent;
+        let y = indent + Math.floor(i/elementsInRow) * cellSize*5;
+
+        return [...accumulator, {...value, x: x, y: y}]
+
+    }, []);
 }
 
 const sortByLinkCount = (data) => {
@@ -89,10 +93,20 @@ const sortByLinkCount = (data) => {
         if(a.linkCount < b.linkCount) return 1;
         if(a.linkCount > b.linkCount) return -1;
         return 0;
-    })
+    });
 }
+
+const filterByObjectClass = (data, objectClass) => {
+    if(objectClass !== null || typeof objectClass === "undefined") {
+        return data.filter(({ objClass,  linked})=>{
+            return objClass === objectClass || Array.from(linked).includes(objectClass);
+        });
+    } else return data;
+};
+
 
 export {
     formDataER,
+    filterByObjectClass,
     addCoordinates
 };

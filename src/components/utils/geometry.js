@@ -21,8 +21,12 @@ const getAngleFromPoint = (point, centerPoint) => {
 	return angle;
 };
 
+const getAngleByLegs = (leg1, leg2) => {
+  return ( Math.atan(leg1/leg2) * 180) / Math.PI;
+}
 
 export {
     getDistance,
-    getAngleFromPoint
+    getAngleFromPoint,
+    getAngleByLegs
 };

@@ -1,0 +1,65 @@
+.filter-tagged {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.filter-tag {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    margin: 0 10px 10px 0;
+    background-color: #ededed;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.filter-tag:hover {
+    box-shadow: 0 0 3px gray;
+}
+
+.close {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+/* close button */
+
+.close:hover::before, .close:hover::after {
+    background: #EF3124;
+  }
+  .close::before, .close::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    margin-top: -1px;
+    background: #000;
+  }
+  .close::before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .close::after {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+.close-black-icon {
+    height: 8px;
+    margin-top: -4px;
+}

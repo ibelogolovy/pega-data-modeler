@@ -7,20 +7,21 @@ const navigationItems = [
         name: "Home",
         icon: mainIcon,
         role: "home",
-        help: "",
+        help: "This project is created from pega architects and analysts. There are tools for pega data review and modeling.",
         link: "/"
     },
     {
         name: "Wide Clipboard",
         icon: clipboardIcon,
         role: "tool",
-        help: "This tool used for",
+        help: "Clipboard: tools for view work object data and property definitions.",
         link: "/clipboard"
     },
     {
         name: "Model Viewer",
         icon: modelIcon,
         role: "tool",
+        help: "Model Viewer: in development stage",
         link: "/model"
     }
 ];
