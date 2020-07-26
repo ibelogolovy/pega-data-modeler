@@ -5,7 +5,7 @@ import CaseSeach from '../../components/case-search';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { caseParamSetted } from '../../actions';
+import { caseParamSetted, fetchPegaSetting } from '../../actions';
 
 const CaseDataView = () => {
 
@@ -14,7 +14,10 @@ const CaseDataView = () => {
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
 
-
+    useEffect(()=> {
+        fetchPegaSetting()(dispatch);
+    });
+    
     const hideHeaderOnScroll = () => {
 
         const distanceY = window.pageYOffset || document.documentElement.scrollTop;

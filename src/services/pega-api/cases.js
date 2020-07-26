@@ -1,6 +1,7 @@
-import axios from "axios";
-import { authHeader, getError } from "../../helpers";
-import { endpoints } from "./endpoints";
+// import axios from "axios";
+// import { authHeader, getError } from "../../helpers";
+
+import {endpoints} from "./endpoints";
 
 const testData = {
   "caseTypeID":"ABR-FW-OpsFW-Work-Loan-Mortgage"
@@ -2658,7 +2659,8 @@ const testData = {
 //       });
 // };
 
-const getCase = () =>  {
+const getCase = ({pegaUrl}) =>  {
+  console.log("endpoint pega: "+ endpoints.BASEURL);
   return new Promise((resolve, reject) => {
     setTimeout(()=>{
       // if (Math.random() > 0.75) {

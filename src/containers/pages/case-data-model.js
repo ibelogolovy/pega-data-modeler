@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import CaseSeach from '../../components/case-search';
 import ModelExplorer from '../model-explorer';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { caseParamSetted } from '../../actions';
+import { caseParamSetted, fetchPegaSetting } from '../../actions';
 
 const CaseDataView = () => {
 
@@ -13,6 +13,10 @@ const CaseDataView = () => {
     const headerRef = useRef(null);
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
+
+    useEffect(()=> {
+        fetchPegaSetting()(dispatch);
+    });
 
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));

@@ -53,7 +53,11 @@ const CaseModel = ({ data }) => {
 
     return (
         <div ref= { svgContainer } className="case-model" >
-            <FilterTagged onClose={ deleteFilterTag } onlyLastEditable = {true}>{ filterTags }</FilterTagged>
+            <FilterTagged onClose={ deleteFilterTag } 
+                        onlyLastEditable = {true}
+                        additionalInsruction = "Click on block for additional filter applying">
+                            { filterTags }
+            </FilterTagged>
             {
                 svgStyle.width===0 ? null :
 

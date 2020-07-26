@@ -2,11 +2,11 @@ import React from 'react';
 
 import './filter-tagged.css';
 
-const FilterTagged = ({ children = [], onClose = ()=>{}, onlyLastEditable = false }) => {
-
+const FilterTagged = ({ children = [], onClose = ()=>{}, additionalInsruction = "", onlyLastEditable = false }) => {
     return (
         <div className='filter-tagged'>
             {
+                children.length > 1 ? 
                 children.map( ({ name, id }, key, array) => {
 
                     return name !==null  ? (
@@ -20,7 +20,7 @@ const FilterTagged = ({ children = [], onClose = ()=>{}, onlyLastEditable = fals
                             }
                         </div>
                     ) : null;
-                })
+                }) : additionalInsruction
             }
         </div>
     )

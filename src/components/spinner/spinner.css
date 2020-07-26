@@ -38,6 +38,11 @@
   -webkit-animation: lds-dual-ring 1s linear infinite;
   animation: lds-dual-ring 1s linear infinite;
 }
+
+.lds-dual-ring.white div {
+  border-color: whitesmoke transparent whitesmoke transparent;
+}
+
 .lds-dual-ring {
   width: 100px !important;
   height: 100px !important;

@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actionTypes';
 import { getCase } from '../services/pega-api/cases';
 import { getDataPage } from '../services/pega-api/data';
+import { getPegaSetting, addPegaSetting } from '../services/api/pega-settings';
 
 // case action creators start
 const caseRequested = () => {
@@ -77,9 +78,49 @@ const caseParamRemoved = (param) => {
 };
 // case params action creators end
 
+// pega settings creators start
+const pegaSettingRequested = () => {
+  return {
+    type: actionTypes.FETCH_PEGASET_REQUESTED
+  };
+};
+
+const pegaSettingLoaded = (setting) => {
+  return {
+    type: actionTypes.FETCH_PEGASET_SUCCESS,
+    payload: setting
+  };
+};
+
+const pegaSettingError = (error) => {
+  return {
+    type: actionTypes.FETCH_PEGASET_ERROR,
+    payload: error
+  };
+};
+
+const fetchPegaSetting = () => (dispatch) => {
+  dispatch(pegaSettingRequested());
+  getPegaSetting()
+    .then((data) => dispatch(pegaSettingLoaded(data)))
+    .catch((error) => dispatch(pegaSettingError(error)));
+};
+
+const postPegaSettingAndFetch = (data) => (dispatch) => {
+  dispatch(pegaSettingRequested());
+  addPegaSetting(data).then(()=>{})
+    .then(()=> getPegaSetting())
+    .then((data) => dispatch(pegaSettingLoaded(data)))
+    .catch((error) => dispatch(pegaSettingError(error)));
+};
+
+// pega settings creators end
+
 export {
     fetchCase,
     fetchDataPage,
+    fetchPegaSetting,
+    postPegaSettingAndFetch,
     caseParamSetted,
     caseParamRemoved
 };

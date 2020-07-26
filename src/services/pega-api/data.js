@@ -1,6 +1,6 @@
-import axios from "axios";
-import { endpoints } from "./endpoints";
-import { authHeader, getError } from "../../helpers";
+// import axios from "axios";
+// import { endpoints } from "./endpoints";
+// import { authHeader, getError } from "../../helpers";
 
 const testData = {
 "pxCommitDateTime":"2018-05-22T10:28:26.000Z"

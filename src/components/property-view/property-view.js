@@ -19,7 +19,7 @@ const PropertyView = ({ data, reference }) => {
         </div>
          <div className="field">
             <div className="name"> Reference </div>
-            <div className="value"> { reference } <div onClick={navigator.clipboard.writeText(reference)}>Copy</div></div>
+            <div className="value"> { reference } <div onClick={()=> navigator.clipboard.writeText(reference)}>Copy</div></div>
          </div>
          <div className="field">
             <div className="name"> Name </div>

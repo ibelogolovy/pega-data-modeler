@@ -46,6 +46,10 @@
     -webkit-transform: rotate(135deg);
 }
 
+.page {
+    height: 100%;
+}
+
 
 .page-header {
     grid-area: header;
@@ -67,4 +71,13 @@
 @font-face {
     font-family: 'Bungee Shade';
     src: local('MyFont'), url(../../fonts/BungeeShade-Regular.woff) format('woff');
+}
+
+.float-left {
+    float: left;
+}
+
+
+.float-right {
+    float: right;
 }
