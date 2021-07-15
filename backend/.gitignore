@@ -4,6 +4,7 @@
 /node_modules/
 classes
 !gradle/wrapper/gradle-wrapper.jar
+/pega-settings.json
 
 ### IntelliJ IDEA ###
 .idea
@@ -14,5 +15,4 @@ classes
 # Local configuration file (sdk path, etc)
 local.properties
 .properties
-pega-settings.json
 
