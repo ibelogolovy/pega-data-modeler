@@ -66,7 +66,6 @@ public class PegaSetting  implements Comparable {
         PegaSetting other = (PegaSetting) obj;
         if (!this.apiUrl.equals(other.getApiUrl()) && !this.apiLogin.equals(other.getApiLogin()))
             return false;
-
         return true;
     }
 

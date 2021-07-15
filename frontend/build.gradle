@@ -1,0 +1,47 @@
+plugins {
+	id 'com.github.node-gradle.node' version '2.2.1'
+	id 'base'
+}
+
+task copyFrontend(type: Copy) {
+	from 'build'
+	into '../backend/build/resources/main/static/.'
+}
+
+task buildFrontend(type: NpmTask) {
+	args = ['run', 'build']
+}
+
+task cleanAll(type: Delete){
+	delete 'build'
+	delete 'node_modules'
+	delete '.gradle'
+	delete 'package-lock.json'
+}
+npmInstall.dependsOn(cleanAll)
+// buildFrontend.dependsOn(npm_cache_verify, npmInstall)
+buildFrontend.dependsOn(npmInstall)
+copyFrontend.dependsOn(buildFrontend)
+
+node {
+	// Version of node to use.
+	 version = '13.1.0'
+
+	// Base URL for fetching node distributions (change if you have a mirror).
+//    distBaseUrl = 'https://nodejs.org/dist'
+
+	// If true, it will download node using above parameters.
+	// If false, it will try to use globally installed node.
+//	download = true
+
+//	// Set the work directory for unpacking node
+	// workDir = file("${project.buildDir}/nodejs")
+//
+//	// Set the work directory for NPM
+	// npmWorkDir = file("${project.buildDir}/npm")
+//
+//	// Set the work directory where node_modules should be located
+//	nodeModulesDir = file("/")
+}
+
+

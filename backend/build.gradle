@@ -1,28 +1,40 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.3.1.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+
 }
 
 group = 'com.pegadatatools.engine'
-version = '1.0-SNAPSHOT'
-
+version = '0.0.1'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
+
+task runJar(type: JavaExec) {
+	main = "-jar";
+	args "build/libs/backend-0.0.1-SNAPSHOT.jar"
+}
+
+task stage(dependsOn:bootJar)
+//runJar.dependsOn(bootJar)
+bootJar.dependsOn(':frontend:copyFrontend').dependsOn(compileJava)
+compileJava.dependsOn(clean)
+
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
+//test {
+//	useJUnitPlatform()
+//}
 
-test {
-    useJUnitPlatform()
-}
 
