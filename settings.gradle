@@ -1,0 +1,5 @@
+include 'frontend'
+include 'backend'
+
+rootProject.name = 'pega-data-modeler'
+
