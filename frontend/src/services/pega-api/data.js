@@ -3,7 +3,10 @@ import { endpoints } from "./endpoints";
 import { authHeader, getError } from "../../helpers";
 
 const getDataPage = (id, params, url, credentials) => {
-  let _url = "/api/pega?url="+encodeURI(url + endpoints.DATA + "/" + id);
+
+  const { REACT_APP_API_URL } = process.env;
+  let _url = REACT_APP_API_URL+"/pega?url="+encodeURI(url + endpoints.DATA + "/" + id);
+  
   return axios
     .get(_url, {
       headers: {

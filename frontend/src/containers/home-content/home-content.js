@@ -71,7 +71,7 @@ const HomeContent = () => {
             </div>
             <div className="info">
                 <div className="float-left">Authors: Ilya Belogolovy (ibelogolovy)</div>
-                <div className="float-right">For learning purpose actually :) </div>
+                <div className="float-right"></div>
             </div>
         </div>
     )

@@ -2,6 +2,8 @@ package com.pegadatatools.engine.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,6 +22,8 @@ import java.util.Collections;
 @RequestMapping("/api")
 public class PegaAPIController {
 
+    Logger logger = LoggerFactory.getLogger(PegaAPIController.class);
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -28,6 +32,8 @@ public class PegaAPIController {
 
         String url = allParams.getFirst("url");
         allParams.remove("url");
+
+        logger.info("[getPegaDataFromUrl] Ask pega api " + url);
 
         HttpHeaders reqHeaders = new HttpHeaders();
         reqHeaders.setContentType(MediaType.APPLICATION_JSON);

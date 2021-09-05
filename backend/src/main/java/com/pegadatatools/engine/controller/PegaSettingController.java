@@ -2,6 +2,8 @@ package com.pegadatatools.engine.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,11 +20,16 @@ import com.pegadatatools.engine.model.PegaSetting;
 @RequestMapping("/api/pegasetting")
 public class PegaSettingController {
 
+    Logger logger = LoggerFactory.getLogger(PegaAPIController.class);
+
     private Set<PegaSetting> settings = new HashSet<>();
 
     private File file = new File("pega-settings.json");
 
+    private ObjectMapper mapper = new ObjectMapper();
+
     private void refreshSettings() throws IOException {
+        logger.info("[refreshSettings] Fetch setting from file system");
         ObjectMapper mapper = new ObjectMapper();
         boolean empty = !file.exists() || file.length() == 0;
         if(!empty) {
@@ -31,12 +38,13 @@ public class PegaSettingController {
     }
 
     private void writeSettings() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        logger.info("[writeSettings] Rewrite settings");
         mapper.writeValue(file, settings);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void updatePegaSettings(HttpServletResponse response, @RequestBody PegaSetting requestBody, HttpSession session) throws IOException {
+        logger.info("[updatePegaSettings] Update setting = " + requestBody.getConfigName());
         try{
             refreshSettings();
             if(settings.contains(requestBody)) {
@@ -66,13 +74,18 @@ public class PegaSettingController {
     public void deletePegaSettings(HttpServletResponse response, @RequestParam String configName, HttpSession session) throws IOException {
         Iterator<PegaSetting> iterator = settings.iterator();
         refreshSettings();
-        while(iterator.hasNext()) {
-            PegaSetting current = iterator.next();
-            System.out.println(current.getConfigName() + " = " + configName);
-            if(current.getConfigName().equals(configName))
-                iterator.remove();
-        }
-        writeSettings();
+
+        boolean removeResult = settings.removeIf(s -> {
+            if (!configName.equals(s.getConfigName())) {
+                return false;
+            } else {
+                logger.info(String.format("[deletePegaSettings] Remove config = %s", configName));
+                return true;
+            }
+        });
+
+        if(removeResult)
+            writeSettings();
     }
 
 }

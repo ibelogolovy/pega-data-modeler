@@ -1,6 +1,7 @@
 import mainIcon from '../images/main.png';
 import clipboardIcon from '../images/clipboard.png';
 import modelIcon from '../images/model.png';
+import clipboardComparator from '../images/compare.png';
 
 const navigationItems = [
     {
@@ -17,6 +18,14 @@ const navigationItems = [
         role: "tool",
         help: "Clipboard: tools for view work object data and property definitions.",
         link: "/clipboard",
+        dependOn: "activeSettingName"
+    },
+    {
+        name: "Clipboard Comparator",
+        icon: clipboardComparator,
+        role: "tool",
+        help: "Compares values in a clipboard",
+        link: "/clipboard/compare",
         dependOn: "activeSettingName"
     },
     {

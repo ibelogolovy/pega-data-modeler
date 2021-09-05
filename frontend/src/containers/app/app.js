@@ -9,6 +9,7 @@ import VerticalNavigation from '../../components/vertical-navigation';
 import Home from '../pages/home';
 import CaseDataView from '../pages/case-data-view';
 import CaseDataModel from '../pages/case-data-model';
+import CaseDataComparator from '../pages/case-data-comparator';
 
 
 import { navigationItems } from '../../constants/navigationItems';
@@ -47,9 +48,12 @@ const App = () => {
                   path="/"
                   component = { Home }
                   exact />
-            <Route
+            <Route exact
                 path="/clipboard"
                 component = { CaseDataView }/>
+            <Route exact
+                path="/clipboard/compare"
+                component = { CaseDataComparator }/>
             <Route
                 path="/model"
                 component = { CaseDataModel }/>

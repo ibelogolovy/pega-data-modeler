@@ -8,9 +8,11 @@ const headers = {
     'Content-Type': 'application/json'
   }
 
+const { REACT_APP_API_URL } = process.env;
+
 const getPegaSetting = () => {
     return axios
-        .get("/api/pegasetting/")
+        .get(REACT_APP_API_URL+"/pegasetting/")
         .then( response => {
             return response.data.map((value)=>{
                 return {login: value.apiLogin, password: value.apiPassword, url: value.apiUrl, name: value.configName}});
@@ -20,30 +22,14 @@ const getPegaSetting = () => {
         })
 }
 
-// const getPegaSetting = () => {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(()=>{
-//           resolve([{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//           {apiLogin: "test1", apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"},{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//           {apiLogin: "test1", apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"},{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//           {apiLogin: "test1", apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"},{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//     {apiLogin: "test1", active:true, apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"},{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//     {apiLogin: "test1", apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"},{apiLogin: "test", apiPassword: "test", apiUrl:"http://test.ru", configName:"PegaMRTDEV"}, 
-//     {apiLogin: "test1", apiPassword: "te3st", apiUrl:"http://test4.ru", configName:"PegaMRTDEV2"}].map((value)=>{
-//         return {login: value.apiLogin, password: value.apiPassword, url: value.apiUrl, name:value.configName, active:value.active};
-//     }));
-//         }, 10);
-//       });
-// }
-
 const addPegaSetting = ({url, login, password, active, name}) => {
     return axios
-        .post("/api/pegasetting/", {apiUrl: url, apiLogin: login, apiPassword: password, configName: name}, {headers: headers})
+        .post(REACT_APP_API_URL+"/pegasetting/", {apiUrl: url, apiLogin: login, apiPassword: password, configName: name}, {headers: headers})
 }
 
 const deletePegaSetting = (name) => {
     return axios
-        .delete("/api/pegasetting", {params:{configName: name}});
+        .delete(REACT_APP_API_URL+"/pegasetting/", {params:{configName: name}});
 }
 
 export {

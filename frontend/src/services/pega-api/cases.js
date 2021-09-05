@@ -4,7 +4,11 @@ import { authHeader, getError } from "../../helpers";
 import {endpoints} from "./endpoints";
 
 const getCase = (id, url, credentials) => {
-  let _url = "/api/pega";
+
+  const { REACT_APP_API_URL } = process.env;
+
+  let _url = REACT_APP_API_URL + "/pega";
+
   return axios
     .get(_url, {
       headers: {
