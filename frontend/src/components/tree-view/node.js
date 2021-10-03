@@ -20,7 +20,21 @@ const getSearched = (isPage, name, value, search) => {
 };
 
 
-const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = "", onClickNode, searchString = "", expandParent=()=>{} }) => {
+/* Function for creating tree node for clibdoard (called recursively)
+Params:
+    name
+    data - object contains page properties
+    prefix - for page list item (page name)
+    reference - pega reference
+    objclass - pega object class
+    onClickNode(node) - function called when click node
+    searchString - for searching in name attribute
+    expandParent() - function called when expand parent node
+    onExpandNode(reference) - function called when any node
+    getNodeStyle(reference) - function for adding styling depends on reference
+*/
+const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = "", onClickNode, searchString = "", 
+                expandParent = () => {}, onExpandNode = () => {}, getNodeStyle = () => "" }) => {
 
     const [visible, setVisible] = useState( name==="" );
 
@@ -28,7 +42,7 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
     const isPageList = Array.isArray(data);
 
     const nodeName = getPegaName(prefix, name);
-    const searchedClass = searchString !== "" ? getSearched(isPage||isPageList, nodeName, data, searchString): null;
+    const searchedClass = searchString !== "" ? getSearched(isPage||isPageList, nodeName, data, searchString) : "";
 
     const onClickAction = () => {
         onClickNode( { nodeName, objClass, nodeRef } );
@@ -38,6 +52,11 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
         setVisible(true);
         expandParent();
     };
+
+    const onExpandAction = () => {
+        onExpandNode(nodeRef);
+        setVisible(!visible);
+    }
     
     useEffect(() => {
         if(searchedClass === "searched") {
@@ -46,11 +65,11 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
     }, [ expandParent, searchedClass]);
 
 
-    let nodeRef = reference + nodeName;
+    let nodeRef = isPageList ? reference : reference + nodeName;
     let nodePrefix;
 
-    if(isPage && name !== "") {
-         nodeRef = isPage ? nodeRef+"." : nodeRef;
+    if(isPage && !isPageList && name !== "") {
+         nodeRef = nodeRef+".";
     }
 
     if(isPageList) {
@@ -59,7 +78,8 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
 
     if(!isPage) {
         return (
-            <div className = { "node property " + searchedClass} onClick= { onClickAction } path = { nodeRef }>
+            <div className = { "node property " + searchedClass + " " + getNodeStyle(nodeRef)} 
+                                                    onClick= { onClickAction } path = { nodeRef }>
                     <div className = "name "> { nodeName }</div>
                     <div className = "value ">  { data }</div>
             </div>
@@ -69,10 +89,10 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
     objClass = data["pxObjClass"];
 
     return (
-        <div className = "node page">
+        <div className = {"node page " + getNodeStyle( isPageList ? nodeRef + nodeName : nodeRef )}>
             <div className = { nodeName !== "" ? "name" : "name hidden"}>
                 <div className = { visible ? "collapse-btn" : "collapse-btn collapse"}
-                    onClick = { () => setVisible(!visible) }>
+                    onClick = { onExpandAction }>
                     <img src = { collapseBtn } alt = "collapse"></img>
                 </div>
                 { nodeName }
@@ -88,7 +108,9 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
                                      objClass = { objClass }
                                      reference = { nodeRef }
                                      searchString = { searchString } 
-                                     expandParent = { expandPage } />;
+                                     expandParent = { expandPage } 
+                                     onExpandNode = { onExpandNode }
+                                     getNodeStyle = { getNodeStyle } />;
                     })
                 }
             </div>

@@ -32,6 +32,27 @@ const fetchCase = (id, url, credentials) => (dispatch) => {
       .catch((error) => dispatch(caseError(error)));
 };
 
+const caseComparedLoaded = (caseData) => {
+  return {
+    type: actionTypes.FETCH_COMPARED_CASE_SUCCESS,
+    payload: caseData
+  };
+};
+
+const caseComparedError = (error) => {
+  return {
+    type: actionTypes.FETCH_COMPARED_CASE_ERROR,
+    payload: error
+  };
+};
+
+const fetchComparedCase = (id, url, credentials) => (dispatch) => {
+  dispatch(caseRequested());
+  getCase(id, url, credentials)
+    .then((data) => dispatch(caseComparedLoaded(data)))
+    .catch((error) => dispatch(caseComparedError(error)));
+};
+
 // case action creators end
 
 // data action creators start
@@ -135,6 +156,7 @@ const postPegaSettingAndFetch = (data) => (dispatch) => {
 
 export {
     fetchCase,
+    fetchComparedCase,
     fetchDataPage,
     fetchPegaSetting,
     postPegaSettingAndFetch,

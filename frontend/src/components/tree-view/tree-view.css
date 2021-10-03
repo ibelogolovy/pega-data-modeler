@@ -35,9 +35,32 @@
 }
 
 .tree .node .property.searched {
-    color: #EF3124;
-    
+    color: #EF3124; 
 }
+
+/* start for compare mode */
+
+.tree .node .property.difference {
+    /* color: white;  */
+    background-color:rgba(239, 49, 36, 0.2); 
+    border-left: 3px solid #EF3124 ;  
+}
+
+.tree .node .property.difference > .name {
+    padding-left: 20px;
+}
+
+.tree .node .page.difference {
+    /* color: white;  */
+    border-left: 3px solid #EF3124;  
+}
+
+.tree .node .property.difference:hover {
+    background-color: rgba(239, 49, 36, 0.6);
+}
+
+/* end for compare mode */
+
 
 .tree .node .property.hidden {
     display: none;

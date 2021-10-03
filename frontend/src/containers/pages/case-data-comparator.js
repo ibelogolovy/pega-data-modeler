@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
 import ClipboardComparator from '../clipboard-comparator';
-import CaseSeach from '../../components/case-search';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,32 +12,12 @@ const CaseDataComparator = () => {
     const headerRef = useRef(null);
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
+    const diffData  = useSelector(state => state.selectedCase.comparedDelta);
 
     useEffect(()=> {
         fetchPegaSetting()(dispatch);
     });
     
-    const hideHeaderOnScroll = () => {
-
-        const distanceY = window.pageYOffset || document.documentElement.scrollTop;
-        const shrinkOn =  headerRef.current.className === "hidden" ? 0:190;
-    
-        if (distanceY > shrinkOn ) {
-            headerRef.current.className = "hidden";
-        } else  {
-            headerRef.current.className = "";
-        }
-      };
-
-    useEffect(()=>{
-        window.addEventListener("scroll", hideHeaderOnScroll);
-
-        return () => {
-            window.removeEventListener("scroll", hideHeaderOnScroll)
-        }
-    }, [ headerRef ]);
-    
-
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
@@ -47,15 +26,10 @@ const CaseDataComparator = () => {
         <div className="page">
             <div ref= {headerRef}>
                 <div className = "page-header">
-                    Case view
+                    Case Data Comparator
                 </div>
-                <div className="search">
-                    <CaseSeach caseId={ caseId } caseClass={ caseClass } onSubmitAction = { onSubmitSearch }/>
-                </div>
+                <ClipboardComparator caseKey = { caseId } caseClass = { caseClass } onSubmitSearch = { onSubmitSearch } diffData = { diffData } />
             </div>
-            {
-                caseId && caseClass ? <ClipboardComparator caseKey = { caseId } caseClass = { caseClass } />:null
-            }
         </div>
 
     )

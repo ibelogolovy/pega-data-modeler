@@ -14,7 +14,33 @@ const getPegaName = (prefix, name) => {
     return name;
 }
 
+/* form pega reference array from json object */
+const formReferenceList = (obj, reference = "", result = []) => {
+    Object.keys(obj || {}).forEach( key => {
+
+        const newRef = reference === "" ? getPegaName("", key) : reference+"."+ getPegaName("", key);
+
+        if(typeof obj[key] !== 'object') {
+            result.push(newRef);
+        } 
+        else if(typeof obj[key] === 'object') {
+            if(Array.isArray(obj[key])){
+                obj[key].forEach((val, i) => 
+                    result = formReferenceList(val, 
+                        reference === "" ? getPegaName(key,i) : reference+"."+getPegaName(key,i)
+                        , result)
+                );
+            } else {
+                result = formReferenceList(obj[key], newRef, result);
+            }
+        }
+        
+    });
+    return result;
+};
+
 
 export {
-    getPegaName
+    getPegaName,
+    formReferenceList
 };

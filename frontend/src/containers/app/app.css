@@ -50,6 +50,10 @@
     height: 100%;
 }
 
+.compare-search {
+    display: flex;
+}
+
 
 .page-header {
     grid-area: header;
