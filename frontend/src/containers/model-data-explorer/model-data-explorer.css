@@ -1,0 +1,21 @@
+
+.model-explorer {
+
+}
+
+.model-explorer .model-schema {
+    display: inline-block;
+    width: 80%;
+}
+
+.model-explorer .model-list {
+    display: inline-block;
+    /* box-shadow: -1px 0px 10px 1px #aaaaaa; */
+    position: fixed;
+    height: 100%;
+    width: 20%;
+}
+
+/* .model-list .buttons {
+    padding: 1px;
+} */

@@ -29,11 +29,19 @@ const navigationItems = [
         dependOn: "activeSettingName"
     },
     {
-        name: "Model Viewer",
+        name: "Class Model",
         icon: modelIcon,
         role: "tool",
-        help: "Model Viewer: in development stage",
+        help: "Class Model",
         link: "/model",
+        dependOn: "activeSettingName"
+    },
+    {
+        name: "Data Model",
+        icon: modelIcon,
+        role: "tool",
+        help: "Class Model",
+        link: "/model/data",
         dependOn: "activeSettingName"
     }
 ];

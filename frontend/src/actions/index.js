@@ -2,6 +2,7 @@ import actionTypes from '../constants/actionTypes';
 import { getCase } from '../services/pega-api/cases';
 import { getDataPage } from '../services/pega-api/data';
 import { getPegaSetting, addPegaSetting, deletePegaSetting } from '../services/api/pega-settings';
+import { createPegaSchema, etPegaSchema, deletePegaSchema } from '../services/api/pega-schema';
 
 
 // case action creators start
@@ -154,6 +155,45 @@ const postPegaSettingAndFetch = (data) => (dispatch) => {
 
 // pega settings creators end
 
+// pega schema creators start
+const schemaRequested = () => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_REQUESTED
+  };
+};
+
+const schemaLoaded = (caseData) => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_SUCCESS,
+    payload: caseData
+  };
+};
+
+const schemaError = (error) => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_ERROR,
+    payload: error
+  };
+};
+
+
+const postNewSchemaFromCase = (id, url, credentials) => (dispatch) => {
+  dispatch(caseRequested());
+  getCase(id, url, credentials)
+    .then((data) => {
+      dispatch(caseLoaded(data));
+      dispatch(schemaRequested());
+      createPegaSchema(data.content, id)
+        .then((schema) => dispatch(schemaLoaded(schema)))
+        .catch((error) => dispatch(schemaError(error)));
+    })
+    .catch((error) => dispatch(caseError(error)));
+};
+
+
+// pega schema creators end
+
+
 export {
     fetchCase,
     fetchComparedCase,
@@ -162,5 +202,6 @@ export {
     postPegaSettingAndFetch,
     deletePegaSettingAndFetch,
     caseParamSetted,
-    caseParamRemoved
+    caseParamRemoved,
+    postNewSchemaFromCase
 };

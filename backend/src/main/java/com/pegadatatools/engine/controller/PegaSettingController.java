@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,27 +26,30 @@ public class PegaSettingController {
 
     private Set<PegaSetting> settings = new HashSet<>();
 
-    private File file = new File("pega-settings.json");
+    @Autowired
+    private File pegaSettingFilePath;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     private void refreshSettings() throws IOException {
-        logger.info("[refreshSettings] Fetch setting from file system");
+        logger.debug("[refreshSettings] Fetch setting from file system");
         ObjectMapper mapper = new ObjectMapper();
-        boolean empty = !file.exists() || file.length() == 0;
+        boolean empty = !pegaSettingFilePath.exists() || pegaSettingFilePath.length() == 0;
         if(!empty) {
-            settings = mapper.readValue(file, new TypeReference<Set<PegaSetting>>(){});
+            settings = mapper.readValue(pegaSettingFilePath, new TypeReference<Set<PegaSetting>>(){});
         }
     }
 
     private void writeSettings() throws IOException {
-        logger.info("[writeSettings] Rewrite settings");
-        mapper.writeValue(file, settings);
+        logger.debug("[writeSettings] Rewrite settings");
+        mapper.writeValue(pegaSettingFilePath, settings);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void updatePegaSettings(HttpServletResponse response, @RequestBody PegaSetting requestBody, HttpSession session) throws IOException {
-        logger.info("[updatePegaSettings] Update setting = " + requestBody.getConfigName());
+
+        logger.debug("[updatePegaSettings] Update setting = " + requestBody.getConfigName());
+
         try{
             refreshSettings();
             if(settings.contains(requestBody)) {
@@ -64,14 +69,17 @@ public class PegaSettingController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<PegaSetting> getPegaSettings() throws IOException {
+
         refreshSettings();
         List<PegaSetting> list = new ArrayList<PegaSetting>(settings);
         Collections.sort(list);
+
         return list;
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public void deletePegaSettings(HttpServletResponse response, @RequestParam String configName, HttpSession session) throws IOException {
+
         Iterator<PegaSetting> iterator = settings.iterator();
         refreshSettings();
 
@@ -79,7 +87,7 @@ public class PegaSettingController {
             if (!configName.equals(s.getConfigName())) {
                 return false;
             } else {
-                logger.info(String.format("[deletePegaSettings] Remove config = %s", configName));
+                logger.debug(String.format("[deletePegaSettings] Remove config = %s", configName));
                 return true;
             }
         });

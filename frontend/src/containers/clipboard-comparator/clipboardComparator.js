@@ -21,11 +21,12 @@ const ClipboardComparator = ({ caseKey, caseClass, onSubmitSearch, diffData = []
       
   }
 
+  // add class named difference if any delta reference includes current node ref
   const getNodeStyle = (path) => {
       let clazz = "";
       diffData.forEach(ref =>{
           if(ref.startsWith(path) && (path.length === ref.length 
-                                || ref.charAt(path.length) === '.' 
+                                || ref.charAt(path.length-1) === '.' 
                                 || ref.charAt(path.length) === '(' )) {
               clazz = "difference";
           };

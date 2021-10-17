@@ -6,13 +6,15 @@
   "dependencies": {
     "arui-feather": "^17.7.0",
     "axios": "^0.21.1",
-    "cors-anywhere": "^0.4.4",
+    "d3": "^7.1.1",
+    "dagre-d3": "^0.6.4",
+    "dagre-d3-react": "^0.2.4",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.4",
     "redux": "^4.0.5"
   },
   "scripts": {

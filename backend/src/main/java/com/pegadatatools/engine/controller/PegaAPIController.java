@@ -2,6 +2,10 @@ package com.pegadatatools.engine.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import com.pegadatatools.engine.model.PegaSchema;
+import com.pegadatatools.engine.model.PegaSetting;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
+import java.util.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,7 +40,7 @@ public class PegaAPIController {
         String url = allParams.getFirst("url");
         allParams.remove("url");
 
-        logger.info("[getPegaDataFromUrl] Ask pega api " + url);
+        logger.debug("[getPegaDataFromUrl] Ask pega api " + url);
 
         HttpHeaders reqHeaders = new HttpHeaders();
         reqHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -53,6 +60,36 @@ public class PegaAPIController {
                 String.class);
 
         return  response.getBody();
+    }
+
+    @RequestMapping(value = "/pega/schema", method = RequestMethod.POST)
+    public PegaSchema createSchema(HttpServletResponse response, @RequestBody JsonNode requestBody, HttpSession session) throws IOException {
+        try{
+            logger.debug("[createSchema] Create schema = " + requestBody.toString());
+
+            String schemaName = requestBody.get("name").asText();
+            JsonNode caseData = requestBody.get("case");
+
+            if(schemaName.isEmpty()) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            } else {
+
+                Iterator<Map.Entry<String, JsonNode>> keyIterator = caseData.fields();
+                PegaSchema newSchema = new PegaSchema(schemaName);
+
+                newSchema.recursivelyGenerateFromJson(caseData, "pyWorkPage", null);
+
+                response.setContentType("application/json; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                return newSchema;
+
+            }
+        }
+        catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ex.printStackTrace(response.getWriter());
+        }
+        return null;
     }
 
 }

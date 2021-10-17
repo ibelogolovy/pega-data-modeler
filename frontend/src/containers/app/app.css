@@ -85,3 +85,27 @@
 .float-right {
     float: right;
 }
+
+.button-gray {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Roboto Rouble", sans-serif;
+    box-sizing: border-box;
+    background-color: #e7e7e7; 
+    color: black;
+    align-self:center;
+    border-style: none;
+    height: 30px;
+    padding: 0 15px;
+    font-size: 13px;
+    text-align: center;
+    white-space: nowrap;
+    transition-duration: 200ms;
+    transition-property: background, border-color, color, width;
+    transition-timing-function: ease;
+    border-radius: 4px;
+    margin: 5px;
+} /* Gray */
+
+.button-gray:hover {
+    background-color: #c1c1c1; 
+} 
+

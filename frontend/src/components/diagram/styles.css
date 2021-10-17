@@ -1,0 +1,66 @@
+.dagre-d3-react .nodes {
+    fill: rgba(11,31,53,.1);
+}
+.dagre-d3-react .nodes text {
+    fill: white;
+}
+
+.dagre-d3-react path {
+    stroke: black;
+    fill: black;
+    stroke-width: 1.5px;
+}
+
+/* erd start */
+.erd-node {
+    width: 200px;
+    border: 1p solid black;
+}
+
+.erd {
+    width: 100%;
+    height: 100%;
+    /* margin-top: 10px;
+    border-top:1px solid rgba(11, 31, 53, .07); */
+}
+
+.erd .schema-name {
+    float: right;
+    padding: 5px;
+    margin: 5px;
+    color:gray;
+    border: 1px solid rgba(11,31,53,.1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.erd .schema-name img {
+    height: 20px;
+    margin-left: 5px;
+}
+
+.erd .schema-name img:hover {
+    background-color: rgba(11,31,53,.1);
+    box-shadow: 0 0 .5px 1.5px rgba(11,31,53,.1);
+    border-radius: 100%;
+    transition-duration: 200ms;
+    transition-property: background, border-color;
+    transition-timing-function: ease;
+}
+
+.erd-node th, .erd-node td {
+    border-spacing: 0;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+.erd-node th {
+    border-bottom: 1px solid black;
+}
+
+.erd-node td:hover {
+    background: rgba(11, 31, 53, .07);
+}
+  /* erd end */

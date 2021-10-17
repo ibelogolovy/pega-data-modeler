@@ -69,6 +69,7 @@ const filterEmptyObjClass = (data) => {
 
 // set final data
 const formDataER = ( data={} ) => {
+    console.log(sortByLinkCount(countLinks(filterEmptyObjClass(formPegaClassArr(data)))));
     return sortByLinkCount(countLinks(filterEmptyObjClass(formPegaClassArr(data))));
 }
 
@@ -103,6 +104,7 @@ const filterByObjectClass = (data, objectClass) => {
         });
     } else return data;
 };
+
 
 
 export {
