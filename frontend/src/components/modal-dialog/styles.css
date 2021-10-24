@@ -1,0 +1,70 @@
+.modal {
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.vertically-centered  > .modal-title{
+        margin-top: 20%;
+}
+
+.modal-title {
+        background-color: #fefefe;
+        margin: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        border: 1px solid rgba(11,31,53,.1);
+        width: 60%;
+        font-weight:500; 
+          
+}
+
+.modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid rgba(11,31,53,.1);
+        width: 60%; 
+}
+
+.close-button {
+        float:right;
+        height: 100%;
+        width: 30px;
+        margin: -7px;
+
+}
+
+.close-button:hover {
+        -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+}
+
+.modal-content > input {
+        display: inline-block;
+        position: relative;
+        width: 97%;
+        min-height: 100%;
+        padding: 10px;
+        outline: none;
+        font: inherit;
+        font-weight: 400;
+        background: none;
+        border: 1px solid rgba(11,31,53,.1);
+        border-radius: 5px;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        text-overflow: ellipsis;
+        transition: opacity 0.2s ease-in-out, color 0.2s ease-in-out;
+        color: rgba(11, 31, 53, 0.95);
+        margin: 5px;
+}
