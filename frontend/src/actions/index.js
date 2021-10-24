@@ -176,7 +176,6 @@ const schemaError = (error) => {
   };
 };
 
-
 const postNewSchemaFromCase = (id, url, credentials) => (dispatch) => {
   dispatch(caseRequested());
   getCase(id, url, credentials)
@@ -189,6 +188,13 @@ const postNewSchemaFromCase = (id, url, credentials) => (dispatch) => {
     })
     .catch((error) => dispatch(caseError(error)));
 };
+
+const setSchemaData = (schemaData) => {
+  return {
+    type: actionTypes.SCHEMA_DATA_SETTED,
+    payload: schemaData
+  };
+}
 
 
 // pega schema creators end
@@ -203,5 +209,6 @@ export {
     deletePegaSettingAndFetch,
     caseParamSetted,
     caseParamRemoved,
+    setSchemaData,
     postNewSchemaFromCase
 };

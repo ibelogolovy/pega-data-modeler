@@ -3,12 +3,7 @@ import * as d3 from "d3";
 import DagreGraph from 'dagre-d3-react';
 import { renderToString } from 'react-dom/server';
 
-import pencilIcon from '../../images/pencil.png';
-
-
 import "./styles.css";
-
-
 
 const nodeAsString = ({label, properties = []}) => {
 
@@ -29,9 +24,8 @@ const nodeAsString = ({label, properties = []}) => {
 };
 
 
-const ERD = ({ data }) => {
+const ERD = ({ data, onNodeClick }) => {
 
-    const { name } = data;
 
     const newNodes = data.nodes.map(( item, i ) => {
         return {
@@ -51,27 +45,28 @@ const ERD = ({ data }) => {
         };
     });
 
+
     return (
         <div className = "erd">
+            <div className="schema">
             <span>Scroll the diagram to view</span>
-            <div className ="schema-name"> {name} <img src={ pencilIcon } alt="edit"/></div>
-            <DagreGraph
-                nodes={newNodes}
-                links={newLinks}
-                config={{
-                    rankdir: 'TB',
-                    align: 'DL',
-                    ranker: 'tight-tree'
-                }}
-                width='100%'
-                height='1400'
-                animate={1000}
-                shape='rect'
-                fitBoundaries
-                zoomable
-                onNodeClick={e => console.log(e)}
-                onRelationshipClick={e => console.log(e)}
-            />
+                <DagreGraph
+                    nodes={newNodes}
+                    links={newLinks}
+                    config={{
+                        rankdir: 'TB',
+                        align: 'DL',
+                        ranker: 'tight-tree'
+                    }}
+                    width='100%'
+                    height='1400'
+                    animate={1000}
+                    shape='rect'
+                    fitBoundaries
+                    zoomable
+                    onNodeClick={e => onNodeClick(e.original.id)}
+                />
+            </div>
         </div>
     )
 }

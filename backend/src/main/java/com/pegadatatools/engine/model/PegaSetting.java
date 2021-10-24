@@ -1,54 +1,17 @@
 package com.pegadatatools.engine.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
-public class PegaSetting  implements Comparable {
+public class PegaSetting implements Comparable {
 
-    private String configName;
-    private String apiUrl;
-    private String apiLogin;
-    private String apiPassword;
-    private Boolean active;
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public String getConfigName() {
-        return configName;
-    }
-
-    public String getApiUrl() {
-        return apiUrl;
-    }
-
-    public String getApiLogin() {
-        return apiLogin;
-    }
-
-    public String getApiPassword() {
-        return apiPassword;
-    }
-
-    public void setConfigName(String configName) {
-        this.configName = configName;
-    }
-
-    public void setApiUrl(String apiUrl) {
-        this.apiUrl = apiUrl;
-    }
-
-    public void setApiLogin(String apiLogin) {
-        this.apiLogin = apiLogin;
-    }
-
-    public void setApiPassword(String apiPassword) {
-        this.apiPassword = apiPassword;
-    }
+    @Getter @Setter private String configName;
+    @Getter @Setter private String apiUrl;
+    @Getter @Setter private String apiLogin;
+    @Getter @Setter private String apiPassword;
+    @Getter @Setter private Boolean active;
 
     @Override
     public int hashCode() {

@@ -52,7 +52,7 @@ const HomeContent = () => {
         <div className="home-content">
             <div className="purpose">
                 <strong>Only</strong> for Pega Platform BPMS project. <br/>
-                <strong>Only</strong>  for your red company.
+                <strong>Only</strong> for internal use.
             </div>
             <div className="system-settings block">
                 <div className="title">System settings</div>
@@ -62,7 +62,7 @@ const HomeContent = () => {
             <div className="about block">
                 <div className="title">About</div>
                 <div className="content">
-                    This site is an isomorphic React App created to help Pega team members work with system data model. The proposed tools allow you to view and visualize object data.
+                    This site is an React App created to help Pega team members work with system data model. The proposed tools allow you to view and visualize object data.
                     <br/><br/>
                     Some tools: <br/><br/>
                     <strong>Wide clipboard</strong> uses Pega API for getting work object data to show it as tree structure and detailed info about each property. <br/><br/>

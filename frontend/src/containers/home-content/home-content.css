@@ -15,7 +15,7 @@
     grid-area: purpose;
     text-align: center;
     font-weight: 500;
-    margin-bottom: 20px;
+    /* margin-bottom: 15px; */
 }
 
 .home-content .system-settings {
@@ -24,7 +24,7 @@
 
 .home-content .block {
     border: 3px solid whitesmoke;
-    padding:8%;
+    padding: 8%;
 }
 
 .home-content .block .title {

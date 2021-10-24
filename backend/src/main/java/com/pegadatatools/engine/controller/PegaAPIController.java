@@ -2,15 +2,16 @@ package com.pegadatatools.engine.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pegadatatools.engine.model.PegaSchema;
-import com.pegadatatools.engine.model.PegaSetting;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +20,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Stream;
+
+import com.pegadatatools.engine.utils.fileUtils;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,6 +37,9 @@ public class PegaAPIController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${pega.schema.filepath}")
+    private String pegaSchemaFilePath;
 
     @RequestMapping(value = "/pega", method = RequestMethod.GET, produces = "application/hal+json;charset=utf8")
     public @ResponseBody String getPegaDataFromUrl(@RequestParam MultiValueMap<String,String> allParams, @RequestHeader HttpHeaders headers) throws JsonProcessingException {
@@ -59,7 +66,7 @@ public class PegaAPIController {
                 entity,
                 String.class);
 
-        return  response.getBody();
+        return response.getBody();
     }
 
     @RequestMapping(value = "/pega/schema", method = RequestMethod.POST)
@@ -92,4 +99,61 @@ public class PegaAPIController {
         return null;
     }
 
+
+    @RequestMapping(value = "/pega/schema", method = RequestMethod.PUT)
+    public void updateSchema(HttpServletResponse response, @RequestBody PegaSchema requestBody, HttpSession session) throws IOException {
+        try{
+            logger.debug("[updateSchema] Update schema = " + requestBody.getName());
+            File schemaFile = new File(pegaSchemaFilePath.concat(requestBody.getName()).concat(".json"));
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(schemaFile, requestBody);
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ex.printStackTrace(response.getWriter());
+        }
+    }
+
+    @RequestMapping(value = "/pega/schema", method = RequestMethod.GET)
+    public Stream<String> getPegaSchemas() throws IOException {
+        return fileUtils.listFilesUsingJavaIO("./schemes/").stream()
+                .map(item -> item.replace(".json", ""));
+    }
+
+    @RequestMapping(value = "/pega/schema/{name}", method = RequestMethod.GET)
+    public PegaSchema getPegaSchemaById(HttpServletResponse response, @PathVariable("name") String name) throws IOException {
+        try{
+            boolean hasFile = fileUtils.listFilesUsingJavaIO(pegaSchemaFilePath).contains(name.concat(".json"));
+            if(!hasFile) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return null;
+            }
+            File schemaFile = new File(pegaSchemaFilePath.concat(name.concat(".json")));
+            ObjectMapper mapper = new ObjectMapper();
+            response.setContentType("application/json; charset=UTF-8");
+            return mapper.readValue(schemaFile, new TypeReference<PegaSchema>(){});
+        }
+        catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ex.printStackTrace(response.getWriter());
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/pega/schema/{name}", method = RequestMethod.DELETE)
+    public void deletePegaSchema(HttpServletResponse response, @PathVariable("name") String name) throws IOException {
+        String fileName = name.concat(".json");
+        boolean hasFile = fileUtils.listFilesUsingJavaIO(pegaSchemaFilePath).contains(fileName);
+        if(!hasFile) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } else {
+            File file = new File(pegaSchemaFilePath.concat(fileName));
+            if(file.delete()) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
 }

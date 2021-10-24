@@ -1,8 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 
 
-
-
 const updatePegaSetting = (state, action) => {
 
     if (state === undefined){
@@ -36,6 +34,15 @@ const updatePegaSetting = (state, action) => {
                 loading: false,
                 error: action.payload
             };
+
+        case actionTypes.SCHEMA_DATA_SETTED:
+          return {
+            ...state.pegaSchema,
+            data: action.payload,
+            loading: false,
+            error: null
+          }
+
         default:
           return state.pegaSchema;
     

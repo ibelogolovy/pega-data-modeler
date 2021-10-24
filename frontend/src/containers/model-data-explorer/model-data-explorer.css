@@ -1,21 +1,26 @@
 
 .model-explorer {
-
+    display: block;
 }
-
 .model-explorer .model-schema {
     display: inline-block;
-    width: 80%;
+
+    width: 60%;
+}
+
+.model-explorer .model-panel {
+    display: inline-block;
+    position: fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    width: 25%;
+    height: 100%;
 }
 
 .model-explorer .model-list {
     display: inline-block;
-    /* box-shadow: -1px 0px 10px 1px #aaaaaa; */
-    position: fixed;
     height: 100%;
-    width: 20%;
+    width: 15%;
+    vertical-align: top;
 }
 
-/* .model-list .buttons {
-    padding: 1px;
-} */

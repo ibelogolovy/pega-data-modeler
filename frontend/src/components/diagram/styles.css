@@ -1,3 +1,17 @@
+.schema {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+/* .control-button {
+    display: inline-block;
+    position: fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height: 100%;
+} */
+
 .dagre-d3-react .nodes {
     fill: rgba(11,31,53,.1);
 }
@@ -20,28 +34,28 @@
 .erd {
     width: 100%;
     height: 100%;
-    /* margin-top: 10px;
-    border-top:1px solid rgba(11, 31, 53, .07); */
+    display: block;
+    /* border: 1px solid rgba(11,31,53,.1); */
 }
 
-.erd .schema-name {
-    float: right;
-    padding: 5px;
-    margin: 5px;
-    color:gray;
-    border: 1px solid rgba(11,31,53,.1);
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
+.schema-description {
     align-content: center;
 }
 
-.erd .schema-name img {
-    height: 20px;
-    margin-left: 5px;
+.control-buttons .description-block {
+    padding: 5px 15px 5px 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(11,31,53,.1);
+    /* box-shadow: 0 6px 14px rgb(11 31 53 / 15%); */
 }
 
-.erd .schema-name img:hover {
+.description-block img {
+    height: 20px;
+    margin-left: 5px;
+    right: 0;
+}
+
+.description-block img:hover {
     background-color: rgba(11,31,53,.1);
     box-shadow: 0 0 .5px 1.5px rgba(11,31,53,.1);
     border-radius: 100%;
@@ -49,6 +63,13 @@
     transition-property: background, border-color;
     transition-timing-function: ease;
 }
+
+.schema-name {
+    display: flex;
+        /* justify-content: center; */
+    align-content: center;
+}
+
 
 .erd-node th, .erd-node td {
     border-spacing: 0;
@@ -60,7 +81,35 @@
     border-bottom: 1px solid black;
 }
 
-.erd-node td:hover {
+.erd-node:hover {
     background: rgba(11, 31, 53, .07);
+    box-shadow: 0 0 40px rgba(11, 31, 53, .07);
 }
+
+.description-block img {
+    height: 20px;
+}
+
+.node-about {
+    border: 1px solid rgba(11,31,53,.1);
+    padding: 5px 15px 5px 15px;
+}
+
+.description-block .description-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.control-buttons .button-gray {
+    margin-top: 10px;
+}
+
+/* .node-properties {
+    position:fixed;
+    overflow: auto;
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+} */
+
   /* erd end */
