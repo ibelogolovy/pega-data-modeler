@@ -1,6 +1,9 @@
 .DS_Store
 .gradle
+.project
+.classpath
 /build/
+/.settings
 classes
 !gradle/wrapper/gradle-wrapper.jar
 

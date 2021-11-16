@@ -1,5 +1,6 @@
 .DS_Store
 .gradle
+.project
 /build/
 /node_modules/
 classes
