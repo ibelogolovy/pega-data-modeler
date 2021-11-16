@@ -9,15 +9,15 @@ import { fetchDataPage } from '../../actions';
 import { useCookies } from 'react-cookie';
 
 
-const PropertyExplorer = ({ property, appliesToClass}) => {
+const PropertyExplorer = ({ property, appliesToClass }) => {
 
   const dispatch = useDispatch();
 
   const getPropDataPage = 'D_pzGetProperty';
 
-  const [{activeSettingUrl, activeSettingCredential}, ] = useCookies(['activeSettingName', 'activeSettingCredential', 'activeSettingUrl']);
+  const [{ activeSettingUrl, activeSettingCredential },] = useCookies(['activeSettingName', 'activeSettingCredential', 'activeSettingUrl']);
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchDataPage(getPropDataPage, { PropertyName: property, AppliesToClass: appliesToClass }, activeSettingUrl, activeSettingCredential)(dispatch);
   }, [dispatch, property, appliesToClass, activeSettingUrl, activeSettingCredential]);
 
@@ -30,11 +30,11 @@ const PropertyExplorer = ({ property, appliesToClass}) => {
     return <ErrorIndicator />;
   }
 
-  if(loading) {
-      return <Spinner/>;
+  if (loading) {
+    return <Spinner />;
   }
 
-  return <PropertyView data = { data } reference = { reference } />;
+  return <PropertyView data={data} reference={reference} />;
 
 };
 

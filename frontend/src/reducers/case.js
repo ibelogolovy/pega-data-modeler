@@ -12,7 +12,7 @@ const updateSelectedCase= (state, action) => {
       comparedData: {},
       params: {},
       comparedDelta: [],
-      loading: true,
+      loading: false,
       error: null
     };
   };

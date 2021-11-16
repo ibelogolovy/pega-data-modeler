@@ -8,27 +8,27 @@ import { caseParamSetted, fetchPegaSetting } from '../../actions';
 
 const CaseDataComparator = () => {
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
     const headerRef = useRef(null);
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
-    const diffData  = useSelector(state => state.selectedCase.comparedDelta);
+    const diffData = useSelector(state => state.selectedCase.comparedDelta);
 
-    useEffect(()=> {
+    useEffect(() => {
         fetchPegaSetting()(dispatch);
     });
-    
+
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
-    
+
     return (
         <div className="page">
-            <div ref= {headerRef}>
-                <div className = "page-header">
+            <div ref={headerRef}>
+                <div className="page-header">
                     Case Data Comparator
                 </div>
-                <ClipboardComparator caseKey = { caseId } caseClass = { caseClass } onSubmitSearch = { onSubmitSearch } diffData = { diffData } />
+                <ClipboardComparator caseKey={caseId} caseClass={caseClass} onSubmitSearch={onSubmitSearch} diffData={diffData} />
             </div>
         </div>
 

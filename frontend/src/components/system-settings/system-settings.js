@@ -11,33 +11,33 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
 
     const [formData, updateFormData] = useState({});
 
-    useEffect(()=>{
-        updateFormData(state => settings.filter((value)=> value.active === true).length > 0 ?
-            settings.filter((value)=> value.active === true)[0] : (settings.length > 0 ? settings[0] : { login:"", password:"", url:"", name:"", key:"" } ));
-      }, [ settings ]); 
+    useEffect(() => {
+        updateFormData(state => settings.filter((value) => value.active === true).length > 0 ?
+            settings.filter((value) => value.active === true)[0] : (settings.length > 0 ? settings[0] : { login: "", password: "", url: "", name: "", key: "" }));
+    }, [settings]);
 
     const onSubmitForm = (e) => {
         e.preventDefault();
         onSubmit(formData);
     };
 
-    const onSelectItem = (item)=>{
+    const onSelectItem = (item) => {
         updateFormData(item);
     }
 
-    const handleChange = (value,event) => {
+    const handleChange = (value, event) => {
         updateFormData({
-          ...formData,
+            ...formData,
 
-          // Trimming any whitespace
-          [event.target.name]: value.trim()
+            // Trimming any whitespace
+            [event.target.name]: value.trim()
         });
-      };
+    };
 
     return (
         <div className="system__settings">
             <div className="add-form">
-            <Form method="post" onSubmit={ (e)=>onSubmitForm(e) }
+                <Form method="post" onSubmit={(e) => onSubmitForm(e)}
                 >
                     <FormField>
                         <Input
@@ -48,7 +48,7 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                             width='available'
                             theme='alfa-on-white'
                             value={formData.name}
-                            onChange={(value,event)=>handleChange(value,event)}
+                            onChange={(value, event) => handleChange(value, event)}
                         />
                     </FormField>
                     <FormField>
@@ -60,7 +60,7 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                             width='available'
                             theme='alfa-on-white'
                             value={formData.url}
-                            onChange={(value,event)=>handleChange(value,event)}
+                            onChange={(value, event) => handleChange(value, event)}
                         />
                     </FormField>
                     <FormField>
@@ -72,7 +72,7 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                             width='available'
                             theme='alfa-on-white'
                             value={formData.login}
-                            onChange={(value,event)=>handleChange(value,event)}
+                            onChange={(value, event) => handleChange(value, event)}
                         />
                     </FormField>
                     <FormField>
@@ -82,34 +82,34 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                             name="password"
                             placeholder='Enter Password for Pega API access'
                             size='m'
-                            disabled = {formData.default}
+                            disabled={formData.default}
                             width='available'
                             theme='alfa-on-white'
                             value={formData.password}
-                            onChange={(value,event)=>handleChange(value,event)}
+                            onChange={(value, event) => handleChange(value, event)}
                         />
                     </FormField>
                     <FormField>
                         <div className="control-buttons">
-                            <Button theme="alfa-on-color" size="m"type='submit' >Save and select</Button>
+                            <Button theme="alfa-on-color" size="m" type='submit' >Save and select</Button>
                             {/* <Button theme="alfa-on-color" size="m" 
                                 onClick ={ ()=>updateFormData({login:"", password:"", url:"", name: ""}) }>
                                     Reset
                             </Button> */}
-                            <Button theme="alfa-on-color" size="m" onClick = {()=>onRemove(formData.name)} >Remove</Button>
+                            <Button theme="alfa-on-color" size="m" onClick={() => onRemove(formData.name)} >Remove</Button>
                         </div>
                     </FormField>
-            </Form>
+                </Form>
             </div>
             <div className="list">
                 {
-                    settings.map((value, key)=>{
-                        const classes = value.name === activeSetting ? 
-                            "list-item active": key === formData.key ? "list-item selected": "list-item";
+                    settings.map((value, key) => {
+                        const classes = value.name === activeSetting ?
+                            "list-item active" : key === formData.key ? "list-item selected" : "list-item";
 
-                        return <div key={key} 
-                                    className={classes}
-                                    onClick={ ()=>onSelectItem({...value, key}) }>
+                        return <div key={key}
+                            className={classes}
+                            onClick={() => onSelectItem({ ...value, key })}>
                             {value.name}
                         </div>
                     })

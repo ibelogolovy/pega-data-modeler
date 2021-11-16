@@ -21,13 +21,36 @@ const createPegaSchema = (data, name) => {
         })
 }
 
+const savePegaSchema = (data) => {
+    return axios
+        .put(REACT_APP_API_URL+"/pega/schema", data, {headers: headers})
+        .then( response => {
+            console.log(response);
+            return response.data;
+        })
+        .catch( error => {
+            return Promise.reject(getError(error));
+        })
+}
+
 const getPegaSchema = (id) => {
+    const url = REACT_APP_API_URL+"/pega/schema/"+id;
+    return axios
+        .get(url, {
+            headers: headers
+          })
+        .then( response => {
+            return response.data;
+        })
+        .catch( error => {
+            return Promise.reject(getError(error));
+        })
+}
+
+const getPegaSchemaList = () => {
     return axios
         .get(REACT_APP_API_URL+"/pega/schema", {
-            headers: headers,
-            params: {
-              id: id
-            }
+            headers: headers
           })
         .then( response => {
             return response.data;
@@ -38,12 +61,15 @@ const getPegaSchema = (id) => {
 }
 
 const deletePegaSchema = (id) => {
+    const url = REACT_APP_API_URL+"/pega/schema/"+id;
     return axios
-        .delete(REACT_APP_API_URL+"/pega/schema", { params: { id } });
+        .delete(url);
 }
 
 export {
     createPegaSchema,
     getPegaSchema,
-    deletePegaSchema
+    getPegaSchemaList,
+    deletePegaSchema,
+    savePegaSchema
 }

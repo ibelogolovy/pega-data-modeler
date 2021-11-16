@@ -2,7 +2,7 @@ import actionTypes from '../constants/actionTypes';
 import { getCase } from '../services/pega-api/cases';
 import { getDataPage } from '../services/pega-api/data';
 import { getPegaSetting, addPegaSetting, deletePegaSetting } from '../services/api/pega-settings';
-import { createPegaSchema, etPegaSchema, deletePegaSchema } from '../services/api/pega-schema';
+import { createPegaSchema, getPegaSchema, savePegaSchema, getPegaSchemaList, deletePegaSchema } from '../services/api/pega-schema';
 
 
 // case action creators start
@@ -169,9 +169,35 @@ const schemaLoaded = (caseData) => {
   };
 };
 
+const schemaDeleted = () => {
+  return {
+    type: actionTypes.DELETE_SCHEMA_SUCCESS
+  };
+};
+
 const schemaError = (error) => {
   return {
     type: actionTypes.FETCH_SCHEMA_ERROR,
+    payload: error
+  };
+};
+
+const schemaListRequested = () => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_LIST_REQUESTED
+  };
+};
+
+const schemaListLoaded = (list) => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_LIST_SUCCESS,
+    payload: list
+  };
+};
+
+const schemaListError = (error) => {
+  return {
+    type: actionTypes.FETCH_SCHEMA_LIST_ERROR,
     payload: error
   };
 };
@@ -196,6 +222,33 @@ const setSchemaData = (schemaData) => {
   };
 }
 
+const fetchSchemaList = (dispatch) => {
+  dispatch(schemaListRequested());
+  getPegaSchemaList()
+    .then((data) => dispatch(schemaListLoaded(data)))
+    .catch((error) => dispatch(schemaListError(error)));
+};
+
+const fetchSchema = (id) => (dispatch) => {
+  dispatch(schemaRequested());
+  getPegaSchema(id)
+    .then((data) => dispatch(schemaLoaded(data)))
+    .catch((error) => dispatch(schemaError(error)));
+};
+
+const deleteSchema = (id) => (dispatch) => {
+  dispatch(schemaRequested());
+  deletePegaSchema(id)
+    .then(() => dispatch(schemaDeleted()))
+    .catch((error) => dispatch(schemaError(error)));
+};
+
+const saveSchema = (schema) => (dispatch) => {
+  dispatch(schemaRequested());
+  savePegaSchema(schema)
+    .then(({ id }) => dispatch(schemaLoaded({...schema, id: id})))
+    .catch((error) => dispatch(schemaError(error)));
+};
 
 // pega schema creators end
 
@@ -210,5 +263,9 @@ export {
     caseParamSetted,
     caseParamRemoved,
     setSchemaData,
-    postNewSchemaFromCase
+    postNewSchemaFromCase,
+    fetchSchemaList,
+    fetchSchema,
+    saveSchema,
+    deleteSchema
 };

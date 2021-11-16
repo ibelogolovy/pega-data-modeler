@@ -9,6 +9,7 @@
 
 .form-inline {
     display: flex;
+    padding-bottom: 0;
 }
 
 .form-inline button {

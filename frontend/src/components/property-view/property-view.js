@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { copyIcon } from '../../constants/controlIcons';
 
 import './property-view.css';
 
@@ -12,6 +13,8 @@ const PropertyView = ({ data, reference }) => {
             pyUsage, 
             pxCreateOpName } = data;
 
+   const onCopy = () => navigator.clipboard.writeText(reference);
+
     return (
     <div className="property-view">
         <div className="field">
@@ -19,7 +22,7 @@ const PropertyView = ({ data, reference }) => {
         </div>
          <div className="field">
             <div className="name"> Reference </div>
-            <div className="value"> { reference } <div onClick={()=> navigator.clipboard.writeText(reference)}>Copy</div></div>
+            <div className="value"> { reference } <img src={copyIcon} alt="Copy" onClick={onCopy}/></div>
          </div>
          <div className="field">
             <div className="name"> Name </div>

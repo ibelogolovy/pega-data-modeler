@@ -4,13 +4,13 @@ import './tree-view.css';
 
 import { getPegaName } from '../utils/pega-object';
 
-import collapseBtn from '../../images/collapseButton.png';
+import { collapseBtn } from '../../constants/controlIcons';
 
 
 const getSearched = (isPage, name, value, search) => {
-    if(!isPage && (name.includes(search) || value.includes(search))) {
+    if (!isPage && (name.includes(search) || value.includes(search))) {
         return "searched";
-    }  
+    }
     else if (isPage && name.includes(search)) {
         return "searched";
     }
@@ -33,19 +33,21 @@ Params:
     onExpandNode(reference) - function called when any node
     getNodeStyle(reference) - function for adding styling depends on reference
 */
-const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = "", onClickNode, searchString = "", 
-                expandParent = () => {}, onExpandNode = () => {}, getNodeStyle = () => "" }) => {
+const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = "", onClickNode, searchString = "",
+    expandParent = () => { }, onExpandNode = () => { }, getNodeStyle = () => "" }) => {
 
-    const [visible, setVisible] = useState( name==="" );
+    const [visible, setVisible] = useState(name === "");
 
     const isPage = typeof data === 'object';
     const isPageList = Array.isArray(data);
 
     const nodeName = getPegaName(prefix, name);
-    const searchedClass = searchString !== "" ? getSearched(isPage||isPageList, nodeName, data, searchString) : "";
+    const searchedClass = searchString !== "" ? getSearched(isPage || isPageList, nodeName, data, searchString) : "";
+
+    let nodeRef = isPageList ? reference : reference + nodeName;
 
     const onClickAction = () => {
-        onClickNode( { nodeName, objClass, nodeRef } );
+        onClickNode({ nodeName, objClass, nodeRef });
     };
 
     const expandPage = () => {
@@ -57,31 +59,29 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
         onExpandNode(nodeRef);
         setVisible(!visible);
     }
-    
+
     useEffect(() => {
-        if(searchedClass === "searched") {
+        if (searchedClass === "searched") {
             expandParent();
         }
-    }, [ expandParent, searchedClass]);
+    }, [expandParent, searchedClass]);
 
-
-    let nodeRef = isPageList ? reference : reference + nodeName;
     let nodePrefix;
 
-    if(isPage && !isPageList && name !== "") {
-         nodeRef = nodeRef+".";
+    if (isPage && !isPageList && name !== "") {
+        nodeRef += ".";
     }
 
-    if(isPageList) {
+    if (isPageList) {
         nodePrefix = name;
     }
 
-    if(!isPage) {
+    if (!isPage) {
         return (
-            <div className = { "node property " + searchedClass + " " + getNodeStyle(nodeRef)} 
-                                                    onClick= { onClickAction } path = { nodeRef }>
-                    <div className = "name "> { nodeName }</div>
-                    <div className = "value ">  { data }</div>
+            <div className={"node property " + searchedClass + " " + getNodeStyle(nodeRef)}
+                onClick={onClickAction} path={nodeRef}>
+                <div className="name "> {nodeName}</div>
+                <div className="value ">  {data}</div>
             </div>
         );
     }
@@ -89,36 +89,36 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
     objClass = data["pxObjClass"];
 
     return (
-        <div className = {"node page " + getNodeStyle( isPageList ? nodeRef + nodeName : nodeRef )}>
-            <div className = { nodeName !== "" ? "name" : "name hidden"}>
-                <div className = { visible ? "collapse-btn" : "collapse-btn collapse"}
-                    onClick = { onExpandAction }>
-                    <img src = { collapseBtn } alt = "collapse"></img>
+        <div className={"node page " + getNodeStyle(isPageList ? nodeRef + nodeName : nodeRef)}>
+            <div className={nodeName !== "" ? "name" : "name hidden"}>
+                <div className={visible ? "collapse-btn" : "collapse-btn collapse"}
+                    onClick={onExpandAction}>
+                    <img src={collapseBtn} alt="collapse"></img>
                 </div>
-                { nodeName }
+                {nodeName}
             </div>
-            <div className = { visible ? "":"hidden" }>
+            <div className={visible ? "" : "hidden"}>
                 {
-                    Object.keys(data).map((value,i) => {
-                        return <Node key = { i } 
-                                     data = { data[value] } 
-                                     name = { value } 
-                                     prefix = { nodePrefix } 
-                                     onClickNode = { onClickNode }
-                                     objClass = { objClass }
-                                     reference = { nodeRef }
-                                     searchString = { searchString } 
-                                     expandParent = { expandPage } 
-                                     onExpandNode = { onExpandNode }
-                                     getNodeStyle = { getNodeStyle } />;
+                    Object.keys(data).map((value, i) => {
+                        return <Node key={i}
+                            data={data[value]}
+                            name={value}
+                            prefix={nodePrefix}
+                            onClickNode={onClickNode}
+                            objClass={objClass}
+                            reference={nodeRef}
+                            searchString={searchString}
+                            expandParent={expandPage}
+                            onExpandNode={onExpandNode}
+                            getNodeStyle={getNodeStyle} />;
                     })
                 }
             </div>
         </div>
-        
+
     );
-         
-      
+
+
 };
 
 export default Node;

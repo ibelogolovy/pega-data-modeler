@@ -4,14 +4,6 @@
     height: 100%;
 }
 
-/* .control-button {
-    display: inline-block;
-    position: fixed;
-    overflow-y:scroll;
-    overflow-x:hidden;
-    height: 100%;
-} */
-
 .dagre-d3-react .nodes {
     fill: rgba(11,31,53,.1);
 }
@@ -22,94 +14,62 @@
 .dagre-d3-react path {
     stroke: black;
     fill: black;
-    stroke-width: 1.5px;
+    stroke-width: 2px;
+}
+
+.dagre-d3-react path:hover {
+    stroke: #EF3124;
+    fill: #EF3124;
+    stroke-width: 2px;
 }
 
 /* erd start */
 .erd-node {
     width: 200px;
     border: 1p solid black;
+    background: #e9e9e9;
+    padding: 10px;
+    border-radius: 10px;
+
 }
 
 .erd {
     width: 100%;
     height: 100%;
     display: block;
-    /* border: 1px solid rgba(11,31,53,.1); */
-}
-
-.schema-description {
-    align-content: center;
-}
-
-.control-buttons .description-block {
-    padding: 5px 15px 5px 15px;
-    margin-bottom: 10px;
     border: 1px solid rgba(11,31,53,.1);
-    /* box-shadow: 0 6px 14px rgb(11 31 53 / 15%); */
 }
-
-.description-block img {
-    height: 20px;
-    margin-left: 5px;
-    right: 0;
-}
-
-.description-block img:hover {
-    background-color: rgba(11,31,53,.1);
-    box-shadow: 0 0 .5px 1.5px rgba(11,31,53,.1);
-    border-radius: 100%;
-    transition-duration: 200ms;
-    transition-property: background, border-color;
-    transition-timing-function: ease;
-}
-
-.schema-name {
-    display: flex;
-        /* justify-content: center; */
-    align-content: center;
-}
-
 
 .erd-node th, .erd-node td {
     border-spacing: 0;
     vertical-align: middle;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .erd-node th {
     border-bottom: 1px solid black;
+    font-size: 20px;
 }
 
-.erd-node:hover {
-    background: rgba(11, 31, 53, .07);
-    box-shadow: 0 0 40px rgba(11, 31, 53, .07);
+.erd-node td:hover {
+    /* background: rgba(11, 31, 53, .07); */
+    /* box-shadow: 0 0 40px rgba(11, 31, 53, .07); */
 }
 
-.description-block img {
-    height: 20px;
+.erd .light-tip {
+    position: absolute;
+    width: auto;
+    color:rgb(192, 192, 192);
+    padding: 10px;
+    font-size: 14px;
 }
 
-.node-about {
-    border: 1px solid rgba(11,31,53,.1);
-    padding: 5px 15px 5px 15px;
+.react-flow__node-erdNode.selected {
+    border: 2px solid #EF3124;
+    border-radius: 10px;
 }
 
-.description-block .description-title {
-    margin-top: 0;
-    margin-bottom: 10px;
+.react-flow__edge.selected .react-flow__edge-path {
+    stroke:#EF3124;
 }
-
-.control-buttons .button-gray {
-    margin-top: 10px;
-}
-
-/* .node-properties {
-    position:fixed;
-    overflow: auto;
-    display: inline-block;
-    width: 20%;
-    height: 100%;
-} */
-
   /* erd end */

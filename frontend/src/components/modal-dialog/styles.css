@@ -1,6 +1,6 @@
 .modal {
         position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        z-index: 100; /* Sit on top */
         left: 0;
         top: 0;
         width: 100%; /* Full width */
@@ -49,11 +49,11 @@
         transform: scale(1.2);
 }
 
-.modal-content > input {
+.modal-content > input, .modal-content > label > input, .modal-content > label > textarea {
         display: inline-block;
         position: relative;
         width: 97%;
-        min-height: 100%;
+        max-height: 100vh;
         padding: 10px;
         outline: none;
         font: inherit;
@@ -67,4 +67,12 @@
         transition: opacity 0.2s ease-in-out, color 0.2s ease-in-out;
         color: rgba(11, 31, 53, 0.95);
         margin: 5px;
+}
+
+.modal-content > label {
+        display: block;
+        width: 97%;
+        min-height: 100%;
+        padding: 10px;
+        font-weight: 500;
 }

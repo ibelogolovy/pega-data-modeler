@@ -14,10 +14,10 @@ const WideClipdoard = ({ caseKey, caseClass }) => {
 
   const [selectedProperty, setSelectedProperty] = useState("");
   const [selectedPropClass, setSelectedPropClass] = useState("");
-  
+
   const dispatch = useDispatch();
 
-  const onClickNode = ( { nodeName, objClass, nodeRef } ) => {
+  const onClickNode = ({ nodeName, objClass, nodeRef }) => {
     setSelectedProperty(nodeName);
     setSelectedPropClass(objClass);
     dispatch(caseParamSetted({ reference: nodeRef }));
@@ -25,11 +25,13 @@ const WideClipdoard = ({ caseKey, caseClass }) => {
 
   return (
     <div className="wide-clipboard">
-      <div className = "tree-explorer">
-        <TreeExplorer caseKey = { caseKey } caseClass = { caseClass } onClickNode={ onClickNode }/>
+      <div className="tree-explorer">
+        <TreeExplorer caseKey={caseKey} caseClass={caseClass} onClickNode={onClickNode} />
       </div>
-      <div className = "property-explorer">
-         <PropertyExplorer property = { selectedProperty } appliesToClass = { selectedPropClass }/>
+      <div className="property-explorer">
+        {
+             selectedProperty!=="" && selectedPropClass!=="" ? <PropertyExplorer property={selectedProperty} appliesToClass={selectedPropClass} /> : null
+        }
       </div>
     </div>
   );

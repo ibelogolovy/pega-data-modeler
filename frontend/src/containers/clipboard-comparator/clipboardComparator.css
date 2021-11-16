@@ -1,8 +1,7 @@
 .clipboard-comparator .tree-explorer {
-    /* display: inline-block; */
     width: 40%;
     height: 100%;
-    margin: 0 1%;
+
 }
 .clipboard-comparator {
     display: flex;
@@ -10,4 +9,8 @@
 
 .inline {
     display: inline;
+}
+
+.clipboard-comparator .tree {
+    margin: 2%;
 }

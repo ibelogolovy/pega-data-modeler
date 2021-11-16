@@ -1,26 +1,118 @@
 
 .model-explorer {
-    display: block;
-}
-.model-explorer .model-schema {
-    display: inline-block;
+    display: grid;
+    grid-template-columns: 15% 60% 25%;
+    height: 99%;
+    padding-top: 1%;
 
-    width: 60%;
+}
+
+.model-explorer.sec-col-collapsed {
+    display: grid;
+    grid-template-columns: 15% 40px 83%;
+    /* transition: width 1s; */
+}
+
+.model-explorer .model-schema {
+    width: 100%;
+    height: 100%;
+}
+
+.model-explorer.sec-col-collapsed .model-schema {
+    width: 25px;
+    border: 1px solid rgba(11,31,53,.1);
 }
 
 .model-explorer .model-panel {
-    display: inline-block;
-    position: fixed;
-    overflow-y:scroll;
-    overflow-x:hidden;
-    width: 25%;
-    height: 100%;
+    /* position: fixed; */
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 78vh;
 }
 
 .model-explorer .model-list {
-    display: inline-block;
     height: 100%;
-    width: 15%;
-    vertical-align: top;
+    width: 100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    border: 1px solid rgba(11,31,53,.1);
 }
 
+.model-explorer .model-list-inner {
+    padding: 5px 15px 5px 15px;
+}
+
+.model-explorer .column {
+    height: 100%;
+    padding-right: 15px;
+}
+
+.model-explorer .collapse-column {
+    display: inline-block;
+    height: 100%;
+}
+
+.model-explorer .model-list h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+tr.model-list-item:hover, 
+.model-list-item.selected  {
+    background: rgba(11, 31, 53, .07);
+}
+
+.model-list table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.model-list td {
+    word-break: break-all;
+}
+
+.model-list td:first-child { 
+    font-weight:700;
+    width: 10%;
+    text-align: center;
+}
+
+img.collapse-icon, img.fullscreen-icon {
+    transform: rotate(-90deg);
+    position: absolute;
+    background-color: white;
+    max-width: 20px;
+    z-index: 100;
+    margin-left: -35px;
+    float: right;
+    border: 1px solid rgba(11,31,53,.1);
+}
+
+img.collapse-icon.expand {
+    transform: rotate(90deg);
+}
+
+img.collapse-icon:hover, img.fullscreen-icon:hover {
+    background-color: rgba(11,31,53,.1);
+}
+
+img.fullscreen-icon {
+    margin-top: 30px;
+}
+
+.model-explorer.expand-full-screen {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: white;
+}
+
+.model-explorer.expand-full-screen .model-panel {
+    height: 100vh;
+}

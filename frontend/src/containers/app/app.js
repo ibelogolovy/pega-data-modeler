@@ -19,52 +19,52 @@ import './app.css';
 
 const App = () => {
 
-    const location = useLocation();
-    const [expandNav, setExpandNav] = useState(false);
+  const location = useLocation();
+  const [expandNav, setExpandNav] = useState(false);
 
-    const [cookies, ] = useCookies(['activeSettingName']);
+  const [cookies,] = useCookies(['activeSettingName']);
 
-    useEffect(()=>{
-      setExpandNav(location.pathname==="/" )
-    }, [ location ]);
+  useEffect(() => {
+    setExpandNav(location.pathname === "/")
+  }, [location]);
 
-    const setVisibility = (dependOn) => {
-        return !dependOn || (dependOn && cookies[dependOn]);
-    }
+  const setVisibility = (dependOn) => {
+    return !dependOn || (dependOn && cookies[dependOn]);
+  }
 
-    return (
-      <div role="main" >
-        <div className = {expandNav ? "navigation expand" : "navigation"}> 
-            <VerticalNavigation 
-                className = "panel"
-                navigationItems = { navigationItems } 
-                onHomeClick = { () => setExpandNav(true) } 
-                onItemClick = { () => setExpandNav(false) } 
-                setVisibility = { setVisibility }
-            />
-        </div>
-        <div className="content">
-          <Switch>
-            <Route
-                  path="/"
-                  component = { Home }
-                  exact />
-            <Route exact
-                path="/clipboard"
-                component = { CaseDataView }/>
-            <Route exact
-                path="/clipboard/compare"
-                component = { CaseDataComparator }/>
-            <Route exact
-                path="/model"
-                component = { CaseClassModel }/>
-            <Route
-                path="/model/data"
-                component = { CaseDataModel }/>
-          </Switch>
-        </div>
+  return (
+    <div role="main">
+      <div className={expandNav ? "navigation expand" : "navigation"}>
+        <VerticalNavigation
+          className="panel"
+          navigationItems={navigationItems}
+          onHomeClick={() => setExpandNav(true)}
+          onItemClick={() => setExpandNav(false)}
+          setVisibility={setVisibility}
+        />
       </div>
-    );
+      <div className="content">
+        <Switch>
+          <Route
+            path="/"
+            component={Home}
+            exact />
+          <Route exact
+            path="/clipboard"
+            component={CaseDataView} />
+          <Route exact
+            path="/clipboard/compare"
+            component={CaseDataComparator} />
+          <Route exact
+            path="/model"
+            component={CaseClassModel} />
+          <Route
+            path="/model/data"
+            component={CaseDataModel} />
+        </Switch>
+      </div>
+    </div>
+  );
 }
 
 export default App;

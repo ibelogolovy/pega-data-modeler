@@ -18,35 +18,35 @@ const ClipboardComparator = ({ caseKey, caseClass, onSubmitSearch, diffData = []
   }
 
   const onExpandNode = (path) => {
-      
+
   }
 
   // add class named difference if any delta reference includes current node ref
   const getNodeStyle = (path) => {
-      let clazz = "";
-      diffData.forEach(ref =>{
-          if(ref.startsWith(path) && (path.length === ref.length 
-                                || ref.charAt(path.length-1) === '.' 
-                                || ref.charAt(path.length) === '(' )) {
-              clazz = "difference";
-          };
-      });
-      return clazz;
+    let clazz = "";
+    diffData.forEach(ref => {
+      if (ref.startsWith(path) && (path.length === ref.length
+        || ref.charAt(path.length - 1) === '.'
+        || ref.charAt(path.length) === '(')) {
+        clazz = "difference";
+      };
+    });
+    return clazz;
   }
-  
+
 
   return (
     <div className="clipboard-comparator">
-      <div className = "tree-explorer">
-        <CaseSeach caseId={ caseKey } caseClass={ caseClass } onSubmitAction = { onSubmitSearch }/>
+      <div className="tree-explorer">
+        <CaseSeach caseId={caseKey} caseClass={caseClass} onSubmitAction={onSubmitSearch} />
         {
-          caseKey && caseClass ? <TreeExplorer caseKey = { caseKey } caseClass = { caseClass } onExpandNode = { onExpandNode } getNodeStyle= { getNodeStyle }/>:null
+          caseKey && caseClass ? <TreeExplorer caseKey={caseKey} caseClass={caseClass} onExpandNode={onExpandNode} getNodeStyle={getNodeStyle} /> : null
         }
       </div>
-      <div className = "tree-explorer">
-        <CaseSeach caseId={ caseKey } caseClass={ caseClass } onSubmitAction = { onSubmitSearchCompare }/>
+      <div className="tree-explorer">
+        <CaseSeach caseId={caseKey} caseClass={caseClass} onSubmitAction={onSubmitSearchCompare} />
         {
-          compareCaseKey && compareCaseClass ? <TreeExplorer caseKey = { compareCaseKey } caseClass = { compareCaseClass } onExpandNode = { onExpandNode } compareMode = { true } getNodeStyle= { getNodeStyle }/>:null
+          compareCaseKey && compareCaseClass ? <TreeExplorer caseKey={compareCaseKey} caseClass={compareCaseClass} onExpandNode={onExpandNode} compareMode={true} getNodeStyle={getNodeStyle} /> : null
         }
       </div>
     </div>

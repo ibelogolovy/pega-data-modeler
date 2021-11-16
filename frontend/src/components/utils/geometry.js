@@ -4,10 +4,10 @@ const getDistance = ( point1, point2 ) => {
   let ys = 0;
  
   xs = point2.X - point1.X;
-  xs = xs * xs;
+  xs *= xs;
  
   ys = point2.Y - point1.Y;
-  ys = ys * ys;
+  ys *= ys;
  
   return Math.sqrt( xs + ys );
 }
@@ -23,7 +23,8 @@ const getAngleFromPoint = (point, centerPoint) => {
 
 const getAngleByLegs = (leg1, leg2) => {
   return ( Math.atan(leg1/leg2) * 180) / Math.PI;
-}
+};
+
 
 export {
     getDistance,

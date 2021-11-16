@@ -32,3 +32,18 @@
     margin-top:0;
 }
 
+.property-view img {
+    
+    height: 15px;
+    width: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.property-view img:hover {
+    background-color: rgba(11,31,53,.1);
+    box-shadow: 0 0 .5px 1.5px rgba(11,31,53,.1);
+    transition-duration: 200ms;
+    transition-property: background, border-color;
+    transition-timing-function: ease;
+}

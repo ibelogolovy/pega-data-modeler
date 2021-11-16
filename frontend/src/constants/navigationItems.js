@@ -2,6 +2,7 @@ import mainIcon from '../images/main.png';
 import clipboardIcon from '../images/clipboard.png';
 import modelIcon from '../images/model.png';
 import clipboardComparator from '../images/compare.png';
+import modelClassIcon from '../images/mesh.png';
 
 const navigationItems = [
     {
@@ -30,7 +31,7 @@ const navigationItems = [
     },
     {
         name: "Class Model",
-        icon: modelIcon,
+        icon: modelClassIcon,
         role: "tool",
         help: "Class Model",
         link: "/model",

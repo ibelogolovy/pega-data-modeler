@@ -9,7 +9,7 @@ import { caseParamSetted } from '../../actions';
 
 const CaseDataView = () => {
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
     const headerRef = useRef(null);
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
@@ -17,19 +17,19 @@ const CaseDataView = () => {
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
-    
+
     return (
         <div>
-            <div ref= {headerRef}>
-                <div className = "page-header">
+            <div ref={headerRef}>
+                <div className="page-header">
                     Case model view
                 </div>
                 <div className="search">
-                    <CaseSeach caseId={ caseId } caseClass={ caseClass } onSubmitAction = { onSubmitSearch }/>
+                    <CaseSeach caseId={caseId} caseClass={caseClass} onSubmitAction={onSubmitSearch} />
                 </div>
             </div>
             {
-                caseId && caseClass ? <ModelExplorer caseKey = { caseId } caseClass = { caseClass } />:null
+                caseId && caseClass ? <ModelExplorer caseKey={caseId} caseClass={caseClass} /> : null
             }
         </div>
 

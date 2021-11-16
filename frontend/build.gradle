@@ -17,7 +17,9 @@ task cleanAll(type: Delete){
 	delete 'node_modules'
 	delete '.gradle'
 	delete 'package-lock.json'
+	delete 'yarn.lock'
 }
+
 npmInstall.dependsOn(cleanAll)
 buildFrontend.dependsOn(npmInstall)
 copyFrontend.dependsOn(buildFrontend)

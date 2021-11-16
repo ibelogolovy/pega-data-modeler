@@ -16,28 +16,28 @@ const ModelExplorer = ({ caseKey = "", caseClass = "" }) => {
   const loading = useSelector(state => state.selectedCase.loading);
   const error = useSelector(state => state.selectedCase.error);
 
-  const [{activeSettingUrl, activeSettingCredential}, ] = useCookies(['activeSettingCredential', 'activeSettingUrl']);
+  const [{ activeSettingUrl, activeSettingCredential },] = useCookies(['activeSettingCredential', 'activeSettingUrl']);
 
   const id = caseClass + " " + caseKey;
 
   const dispatch = useDispatch();
 
   /* get case data with pega api */
-  useEffect(()=>{
-    if(id!=="" && activeSettingUrl !== "") {
+  useEffect(() => {
+    if (id !== "" && activeSettingUrl !== "") {
       fetchCase(id, activeSettingUrl, activeSettingCredential)(dispatch);
     }
-  }, [ id, activeSettingUrl, activeSettingCredential, dispatch ]); 
+  }, [id, activeSettingUrl, activeSettingCredential, dispatch]);
 
- if (error) {
+  if (error) {
     return <ErrorIndicator />;
   }
 
-  if(loading) {
-    return <Spinner/>;
+  if (loading) {
+    return <Spinner />;
   }
 
-  return <CaseModel data = { data } />;
+  return <CaseModel data={data} />;
 
 };
 

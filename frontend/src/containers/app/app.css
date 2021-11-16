@@ -1,11 +1,12 @@
 [role=main] {
     display: grid;
     grid-template-columns: 10% 85% 5%;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: 1% 98% 1%;
     grid-template-areas: 
     "navigation header ."
     "navigation main . "
     "navigation footer .";
+    height: 100vh;
 }
 
 [role=main] .content {
@@ -56,7 +57,7 @@
 
 
 .page-header {
-    grid-area: header;
+    /* grid-area: header; */
     display: inline-block;
     color: rgba(11, 31, 53, .95);
     margin: 40px 0 16px;

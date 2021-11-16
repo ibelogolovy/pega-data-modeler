@@ -12,16 +12,23 @@ import java.util.*;
 @NoArgsConstructor
 public class PegaSchema {
 
+    static final String CLASS_NODE_PROP = "pxObjClass";
+    static final String DEFAULT_ROOT_NAME = "pyWorkPage";
+
     @Getter @Setter private UUID id;
     @Getter @Setter private String name;
     private int nodeCounter = 0;
 
     @Getter @Setter private LinkedList<PegaNode> nodes = new LinkedList<>();
-    @Getter @Setter private LinkedList<PegaNodeLink> links = new LinkedList<>();
+    @Getter @Setter private LinkedHashSet<PegaNodeLink> links = new LinkedHashSet<>();
 
     public PegaSchema(String name) {
-        this.id = UUID.randomUUID();
         this.name = name;
+        this.id = null;
+    }
+
+    public void generateId() {
+        this.id = UUID.randomUUID();
     }
 
     public void addLink (PegaNode from, PegaNode to) {
@@ -32,7 +39,7 @@ public class PegaSchema {
         nodeCounter++;
 
         Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
-        String objectClass = jsonNode.has("pxObjClass") ? jsonNode.get("pxObjClass").asText() : null;
+        String objectClass = jsonNode.has(CLASS_NODE_PROP) ? jsonNode.get(CLASS_NODE_PROP).asText() : null;
         PegaNode candidateNode = new PegaNode(String.valueOf(nodeCounter),nodeLabel, objectClass, parentNode);
 
         int existIdx = nodes.indexOf(candidateNode);
@@ -47,13 +54,11 @@ public class PegaSchema {
             pegaNode.addPropertyFromJson(item, pegaNode.getPath());
 
             if(item.getValue().getNodeType() == JsonNodeType.OBJECT){
-                recursivelyGenerateFromJson(item.getValue(),item.getKey(), pegaNode);
+                recursivelyGenerateFromJson(item.getValue(), item.getKey(), pegaNode);
             }
             if(item.getValue().getNodeType() == JsonNodeType.ARRAY) {
                 Iterator<JsonNode> nodeIterator = item.getValue().elements();
-                nodeIterator.forEachRemaining(node -> {
-                    recursivelyGenerateFromJson(node,item.getKey(), pegaNode);
-                });
+                nodeIterator.forEachRemaining(node -> recursivelyGenerateFromJson(node, item.getKey(), pegaNode));
             }
         });
         if (existIdx < 0) {
@@ -64,20 +69,19 @@ public class PegaSchema {
     @NoArgsConstructor
     static public class PegaNode {
 
-        static final String DEFAULT_PAGE = "pyWorkPage";
-
         @Getter @Setter private String id;
         @Getter @Setter private String label;
         @Getter @Setter private String path;
         @Getter @Setter private String customName;
         @Getter @Setter private String objClass;
+        @Getter @Setter private String tableName;
         @Getter @Setter private LinkedHashSet<PegaNodeProperty> properties = new LinkedHashSet<>();
 
         public PegaNode(String id, String label, String objClass, PegaNode parent) {
             this.id = id;
             this.label = label;
             this.objClass = objClass;
-            this.path = parent == null ? DEFAULT_PAGE : parent.getPath().concat(".").concat(label);
+            this.path = parent == null ? PegaSchema.DEFAULT_ROOT_NAME : parent.getPath().concat(".").concat(label);
         }
 
         public void addProperty(String propertyName, String propertyType, String propertyClass, String nodePath) {
@@ -89,8 +93,8 @@ public class PegaSchema {
         public void addPropertyFromJson (Map.Entry<String, JsonNode> node, String nodePath) {
             JsonNodeType propertyType = node.getValue().getNodeType();
             String propertyName = node.getKey();
-            String propertyObjClass = propertyType == JsonNodeType.OBJECT && node.getValue().has("pxObjClass") ?
-                    node.getValue().get("pxObjClass").asText() : null;
+            String propertyObjClass = propertyType == JsonNodeType.OBJECT && node.getValue().has(PegaSchema.CLASS_NODE_PROP) ?
+                    node.getValue().get(PegaSchema.CLASS_NODE_PROP).asText() : null;
             addProperty(propertyName, propertyType.toString(), propertyObjClass, nodePath);
         }
 
@@ -98,13 +102,13 @@ public class PegaSchema {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            PegaNode pegaNode = (PegaNode) o;
-            return Objects.equals(objClass, pegaNode.objClass) && Objects.equals(label, pegaNode.label);
+            PegaNode that = (PegaNode) o;
+            return this.hashCode() == that.hashCode();
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, label, properties);
+            return Objects.hash(label, objClass);
         }
     }
 
@@ -145,6 +149,19 @@ public class PegaSchema {
         public PegaNodeLink(String source, String target) {
             this.source = source;
             this.target = target;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.source, this.target);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PegaNodeLink that = (PegaNodeLink) o;
+            return this.hashCode() == that.hashCode();
         }
     }
 

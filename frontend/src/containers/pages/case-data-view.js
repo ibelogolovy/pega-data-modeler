@@ -9,52 +9,52 @@ import { caseParamSetted, fetchPegaSetting } from '../../actions';
 
 const CaseDataView = () => {
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
     const headerRef = useRef(null);
 
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
 
-    useEffect(()=> {
+    useEffect(() => {
         fetchPegaSetting()(dispatch);
     });
-    
+
     const hideHeaderOnScroll = () => {
 
         const distanceY = window.pageYOffset || document.documentElement.scrollTop;
-        const shrinkOn =  headerRef.current.className === "hidden" ? 0:190;
-    
-        if (distanceY > shrinkOn ) {
+        const shrinkOn = headerRef.current.className === "hidden" ? 0 : 190;
+
+        if (distanceY > shrinkOn) {
             headerRef.current.className = "hidden";
-        } else  {
+        } else {
             headerRef.current.className = "";
         }
-      };
+    };
 
-    useEffect(()=>{
+    useEffect(() => {
         window.addEventListener("scroll", hideHeaderOnScroll);
 
         return () => {
             window.removeEventListener("scroll", hideHeaderOnScroll)
         }
-    }, [ headerRef ]);
-    
+    }, [headerRef]);
+
 
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
-    
+
     return (
         <div className="page">
-            <div ref= {headerRef}>
-                <div className = "page-header">
+            <div ref={headerRef}>
+                <div className="page-header">
                     Case view
                 </div>
                 <div className="search">
-                    <CaseSeach caseId={ caseId } caseClass={ caseClass } onSubmitAction = { onSubmitSearch }/>
+                    <CaseSeach caseId={caseId} caseClass={caseClass} onSubmitAction={onSubmitSearch} />
                 </div>
             </div>
             {
-                caseId && caseClass ? <WideClipboard caseKey = { caseId } caseClass = { caseClass } />:null
+                caseId && caseClass ? <WideClipboard caseKey={caseId} caseClass={caseClass} /> : null
             }
         </div>
 

@@ -1,0 +1,139 @@
+.schema-description {
+    align-content: center;
+}
+
+.diagram-control-buttons {
+    width: 100%;
+    display: grid;
+}
+
+.diagram-control-buttons.wide  {
+    grid-template-columns: 30% 40% 30%;
+    justify-content: stretch; 
+}
+
+.diagram-control-buttons.wide .node-properties {
+    width: 25vw;
+    /* max-height: 80vh; */
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.diagram-control-buttons.wide .node-links {
+    /* max-height: 70vh; */
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.diagram-control-buttons .description-block {
+    padding: 5px 15px 5px 15px;
+    margin-bottom: 10px;
+    /* margin-left: 10px; */
+    border: 1px solid rgba(11,31,53,.1);
+    width: 90%;
+    /* box-shadow: 0 6px 14px rgb(11 31 53 / 15%); */
+}
+
+.diagram-control-buttons .description-block img {
+    height: 20px;
+    margin-left: 5px;
+    right: 0;
+}
+
+.diagram-control-buttons .description-block img:hover {
+    background-color: rgba(11,31,53,.1);
+    box-shadow: 0 0 .5px 1.5px rgba(11,31,53,.1);
+    border-radius: 100%;
+    transition-duration: 200ms;
+    transition-property: background, border-color;
+    transition-timing-function: ease;
+}
+
+.description-block > .row {
+    display: flex;
+        /* justify-content: center; */
+    align-content: center;
+    margin-bottom: 2px;
+}
+
+.node-about {
+    border: 1px solid rgba(11,31,53,.1);
+    padding: 5px 15px 5px 15px;
+}
+
+.diagram-control-buttons .description-block .description-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.diagram-control-buttons .description-block .description-title img.icon-close {
+    float:right;
+    height: 25px;
+}
+
+.diagram-control-buttons .description-block .list-item {
+    padding: 5px 10px;
+    word-wrap: break-word;
+}
+
+.diagram-control-buttons .description-block .list-item:hover, 
+.diagram-control-buttons .description-block .list-item.selected {
+    background: rgba(11, 31, 53, .07);
+}
+
+.diagram-control-buttons .button-gray {
+    margin-top: 15px;
+}
+
+.diagram-control-buttons .node-list {
+    /* position: fixed; */
+    height: 65vh;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.diagram-control-buttons .node-list table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.diagram-control-buttons .node-list td:first-child { 
+    /* background-color: rgba(11, 31, 53, .07); */
+    font-weight:700;
+    text-align: center;
+}
+
+.diagram-control-buttons .gray {
+    color:rgb(172, 172, 172);
+}
+
+.description-block th {
+    text-align: left;
+    border-bottom: 1px solid rgba(11, 31, 53, .07);
+    padding-bottom: 5px;
+}
+
+.description-block table {
+    border:none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.description-block table.wide td {
+    border-left: 1px solid rgba(11, 31, 53, .07);
+    border-right: 1px solid rgba(11, 31, 53, .07);
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.description-block table.wide td:first-child {
+    border-left: none;
+}
+
+.description-block.with-edit table td:last-child {
+    border-right: none;
+    width: 60px;
+}
+
+  /* erd end */

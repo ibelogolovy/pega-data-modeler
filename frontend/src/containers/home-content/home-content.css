@@ -47,5 +47,10 @@
     height: 100%;
 }
 
+.home-content li {
+    position: relative;
+    padding-bottom: 12px;
+}
+
 
 
