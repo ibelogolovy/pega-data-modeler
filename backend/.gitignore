@@ -4,10 +4,11 @@
 .project
 .classpath
 /build/
+/bin/
 /node_modules/
 classes
 !gradle/wrapper/gradle-wrapper.jar
-/pdmAppData/pega-settings.json
+/pdmAppData/
 
 ### IntelliJ IDEA ###
 .idea
