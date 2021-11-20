@@ -125,7 +125,7 @@ public class PegaAPIController {
 
     @RequestMapping(value = "/pega/schema", method = RequestMethod.GET)
     public Stream<Map<String, String>> getPegaSchemas(HttpServletResponse response) throws IOException {
-        return fileUtils.listFilesUsingJavaIO("./schemes/").stream()
+        return fileUtils.listFilesUsingJavaIO(pegaSchemaFilePath).stream()
                 .map(item -> {
                     HashMap<String, String> responseMap = new HashMap<>();
                     File schemaFile = new File(pegaSchemaFilePath.concat(item));

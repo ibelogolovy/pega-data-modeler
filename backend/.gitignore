@@ -7,7 +7,7 @@
 /node_modules/
 classes
 !gradle/wrapper/gradle-wrapper.jar
-/pega-settings.json
+/pdmAppData/pega-settings.json
 
 ### IntelliJ IDEA ###
 .idea
