@@ -2,6 +2,7 @@
 .gradle
 .project
 .classpath
+/docker/.jar
 /build/
 /.settings
 classes
