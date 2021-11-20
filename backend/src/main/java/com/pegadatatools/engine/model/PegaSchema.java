@@ -21,6 +21,7 @@ public class PegaSchema {
 
     @Getter @Setter private LinkedList<PegaNode> nodes = new LinkedList<>();
     @Getter @Setter private LinkedHashSet<PegaNodeLink> links = new LinkedHashSet<>();
+    @Getter @Setter private LinkedHashSet<Position> positions = new LinkedHashSet<>();
 
     public PegaSchema(String name) {
         this.name = name;
@@ -45,6 +46,10 @@ public class PegaSchema {
         int existIdx = nodes.indexOf(candidateNode);
         PegaNode pegaNode = existIdx > 0 ?  nodes.get(existIdx) : candidateNode;
 
+        if (existIdx < 0) {
+            nodes.add(pegaNode);
+        }
+
         if(parentNode != null){
             addLink(parentNode, pegaNode);
         }
@@ -61,9 +66,6 @@ public class PegaSchema {
                 nodeIterator.forEachRemaining(node -> recursivelyGenerateFromJson(node, item.getKey(), pegaNode));
             }
         });
-        if (existIdx < 0) {
-            nodes.add(pegaNode);
-        }
     }
 
     @NoArgsConstructor
@@ -162,6 +164,17 @@ public class PegaSchema {
             if (o == null || getClass() != o.getClass()) return false;
             PegaNodeLink that = (PegaNodeLink) o;
             return this.hashCode() == that.hashCode();
+        }
+    }
+
+    @NoArgsConstructor
+    static public class Position {
+        @Getter @Setter private String nodeId;
+        @Getter @Setter private double x;
+        @Getter @Setter private double y;
+        public Position(double x, double y) {
+            this.x = x;
+            this.y = y;
         }
     }
 

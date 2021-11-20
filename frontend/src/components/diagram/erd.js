@@ -12,7 +12,7 @@ import ReactFlow, {
     isEdge
 } from 'react-flow-renderer';
 import dagre from 'dagre';
-import nodeTypes from './erd-node-types'
+import nodeTypes from './erd-node-types';
 
 import "./styles.css";
 
@@ -22,6 +22,12 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 200;
 const nodeHeight = 5;
 const snapGrid = [20, 20];
+const position = { x: 0, y: 0 };
+const edgeType = 'default';
+const edgeStrokeWidth = 3;
+const edgeSimpleStyle = { strokeWidth: edgeStrokeWidth };
+const edgeOutputStyle = { strokeWidth: edgeStrokeWidth, stroke: '#EF3124'};
+const edgeInputStyle = { strokeWidth: edgeStrokeWidth, stroke: 'black'};
 
 const getLayoutedElements = (elements, direction = 'TB') => {
     const isHorizontal = direction === 'LR';
@@ -50,6 +56,7 @@ const getLayoutedElements = (elements, direction = 'TB') => {
                 x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
                 y: nodeWithPosition.y - nodeHeight / 2,
             };
+            
         }
 
         return el;
@@ -57,42 +64,44 @@ const getLayoutedElements = (elements, direction = 'TB') => {
 };
 
 
-const ERD = ({ data, onNodeClick=()=>{}, onNodeDelete=()=>{}, onEdgeDelete=()=>{} }) => {
-    const position = { x: 0, y: 0 };
-    const edgeType = 'default';
-    const edgeStrokeWidth = 3;
-    const edgeSimpleStyle = { strokeWidth: edgeStrokeWidth };
-    const edgeSelectedStyle = { strokeWidth: edgeStrokeWidth, stroke: '#EF3124'};
+const getProcessedData = ({nodes, links, positions}) => {
+    return [...nodes.map(item => {
+        const existingPositions = positions.filter(pos => pos.nodeId === item.id);
+        const existingPosition = existingPositions.length === 1 ? existingPositions[0] : position; 
+        return {
+            id: item.id,
+            data: { ...item },
+            position: existingPosition,
+            type: 'erdNode'
+        }
+    }), ...links.map((item, i) => {
+        return {
+            id: `edge-${i}`,
+            source: item.source, target: item.target, type: edgeType, animated: false,
+            arrowHeadType: ArrowHeadType.ArrowClosed,
+            style: edgeSimpleStyle
+        }
+    })];
+};
 
-    const getProcessedData = ({nodes, links}) => {
-        return [...nodes.map(item => {
-            return {
-                id: item.id,
-                data: { ...item },
-                position,
-                type: 'erdNode'
-            }
-        }), ...links.map((item, i) => {
-            return {
-                id: `edge-${i}`,
-                source: item.source, target: item.target, type: edgeType, animated: false,
-                arrowHeadType: ArrowHeadType.ArrowClosed,
-                style: edgeSimpleStyle
-            }
-        })];
-    };
 
-    const layoutedElements = getLayoutedElements(getProcessedData(data));
+const ERD = ({ data, onNodeClick=()=>{}, onNodeDelete=()=>{}, onEdgeDelete=()=>{}, onNodeDrag=()=>{}, updatePositions=()=>{}}) => {
+
+    // if schema data has not positions for building diagram then special layoting function is called. Otherwise, positions would be used
+    const layoutedElements = data.positions && data.positions.length > 0 ? getProcessedData(data) : getLayoutedElements(getProcessedData(data));
     const [elements, setElements] = useState(layoutedElements);
 
     useEffect(() => {
-        setElements(getLayoutedElements(getProcessedData(data)));
-      }, [data]);
+        const refreshElements = data.positions && data.positions.length > 0 ? getProcessedData(data) : getLayoutedElements(getProcessedData(data));
+        setElements(refreshElements);
+        // eslint-disable-next-line
+      }, [data.links, data.nodes]);
 
     const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
+
     const onConnect = (params) =>
         setElements((els) =>
-            addEdge({ ...params, type: edgeType, animated: true, style: edgeSelectedStyle}, els)
+            addEdge({ ...params, type: edgeType, animated: true, style: edgeOutputStyle}, els)
         );
 
     const onElementsRemove = (elementsToRemove) => {
@@ -104,12 +113,28 @@ const ERD = ({ data, onNodeClick=()=>{}, onNodeDelete=()=>{}, onEdgeDelete=()=>{
             onNodeClick(selected[0].id);
             setElements([
                 ...elements.filter(item => isNode(item)),
-                ...elements.filter(item => isEdge(item) && item.source!==selected[0].id)
+                ...elements.filter(item => isEdge(item) && item.source!==selected[0].id && item.target!==selected[0].id)
                     .map(item => { return {...item, animated: false, style: edgeSimpleStyle}}),
                 ...elements.filter(item => isEdge(item) && item.source===selected[0].id)
-                    .map(item => { return {...item, animated: true, style: edgeSelectedStyle}})
+                    .map(item => { return {...item, animated: true, style: edgeOutputStyle}}),
+                ...elements.filter(item => isEdge(item) && item.target===selected[0].id)
+                    .map(item => { return {...item, animated: true, style: edgeInputStyle}})
             ]);
         }
+    };
+
+    const onNodeDragStop = (event, node) => {
+        onNodeDrag(node);
+    };
+
+    // first time we update all positions in store (after creation it will be unnecessarily)
+    if(data.positions && data.positions.length === 0) {
+        updatePositions(elements.filter(el=> isNode(el)).map(el => {
+            return {
+                nodeId: el.id,
+                ...el.position
+            }
+        }));
     };
 
     return (
@@ -127,7 +152,9 @@ const ERD = ({ data, onNodeClick=()=>{}, onNodeDelete=()=>{}, onEdgeDelete=()=>{
                         snapGrid={snapGrid}
                         minZoom={0.1}
                         onSelectionChange = {onSelectionChange}
-                        
+                        onNodeDragStop = {onNodeDragStop} 
+                        nodesConnectable = {false}
+                        nodesDraggable = {true}
                     >
                         <MiniMap
                             nodeStrokeColor={(n) => {

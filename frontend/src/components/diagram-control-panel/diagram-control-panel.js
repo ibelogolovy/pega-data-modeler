@@ -23,7 +23,7 @@ const linkTypes = [
     }
 ];
 
-const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, selectedNode, onUpdateSchema = () => { }, onSaveSchema = () => { }, onDeleteSchema = () => { }, format = "normal" }) => {
+const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, selectedNode, onUpdateSchema = () => { }, onSaveSchema = () => { }, onDeleteSchema = () => { }, format = "normal",onNodeClick =()=>{} }) => {
 
     const { name, nodes, links } = schema;
 
@@ -32,7 +32,9 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
     const [modalParam, setModalParam] = useState({});
 
     const [showPropertyModal, setShowPropertyModal] = useState(false);
+    const [showNodeModal, setShowNodeModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
+    // const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const [activeNode, setActiveNode] = useState(selectedNode);
 
@@ -46,6 +48,7 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         setShowModal(false);
         setShowPropertyModal(false);
         setShowLinkModal(false);
+        setShowNodeModal(false);
         setModalParam({});
     };
 
@@ -62,6 +65,12 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         });
         setModalField(propertyObj.name);
         setShowPropertyModal(true);
+    };
+
+    const showNodeModalDialog = (nodeObj) => (e) => {
+        setModalParam(nodeObj);
+        setModalField("new");
+        setShowNodeModal(true);
     };
 
     const showLinkModalDialog = (linkObj, idx) => (e) => {
@@ -162,7 +171,6 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
     };
 
     const onPropertyModalSubmit = () => {
-        ;
         if (Number(modalParam.idx) >= 0) {
             updateActiveNode({
                 ...activeNode,
@@ -225,6 +233,19 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         showLinkModalDialog(newLink)();
     };
 
+    const onNodeAdd = () => {
+        const maxNodeId = nodes.reduce((prev,curr) =>  Number(prev) <= Number(curr.id) ? Number(curr.id)+1 : Number(prev), 0 );
+        const newNode= {
+            id: maxNodeId.toString(),
+            customName: null,
+            label: null,
+            objClass: null,
+            tableName: null,
+            properties: []
+        };
+        showNodeModalDialog(newNode)();
+    };
+
     const onLinkModalSubmit = () => {
         const linkIdx = modalParam.idx;
         const newLink = {
@@ -247,6 +268,19 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                 links: [
                     ...activeNode.links,
                     newLink
+                ]
+            });
+        };
+        onModalClose();
+    };
+
+    const onNodeModalSubmit = () => {
+        if (modalParam.id) {
+            onUpdateSchema({
+                ...schema,
+                nodes: [
+                    ...schema.nodes,
+                    modalParam
                 ]
             });
         };
@@ -290,7 +324,8 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                 {!activeNode || format === "wide" ?
                     <NodeList nodes={nodes}
                         onNodeSelect={onNodeSelect}
-                        selectedNodeId={selectedNodeId} /> : null
+                        selectedNodeId={selectedNodeId}
+                        onNodeAdd={onNodeAdd} /> : null
                 }
             </div>
             <div className="column">
@@ -346,12 +381,20 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                 </VerticallyCenteredModal> : null
             }
 
+            {showNodeModal ?
+                <VerticallyCenteredModal header={"New node"} onClose={onModalClose}>
+                    <label htmlFor="label">Label: <input type="text" name="customName" value={modalParam.label || ""} onChange={e => setModalParam({ ...modalParam, label: e.target.value })} /></label>
+                    <label htmlFor="objClass">Class: <input type="text" name="objClass" value={modalParam.objClass || ""} onChange={e => setModalParam({ ...modalParam, objClass: e.target.value })} /></label>
+                    <button className="button-gray" onClick={onNodeModalSubmit}>Save</button>
+                </VerticallyCenteredModal> : null
+            }
+
             {showPropertyModal ?
                 <VerticallyCenteredModal header={"Edit property " + modalField} onClose={onModalClose}>
                     <label htmlFor="name">Name: <input type="text" name="name" value={modalParam.name || ""} onChange={e => setModalParam({ ...modalParam, name: e.target.value })} /></label>
-                    <label htmlFor="customName">Label: <input type="text" name="customName" value={modalParam.customName || ""} onChange={e => setModalParam({ ...modalParam, customName: e.target.value })} /></label>
-                    <label htmlFor="customName">Class: <input type="text" name="objClass" value={modalParam.objClass || ""} onChange={e => setModalParam({ ...modalParam, objClass: e.target.value })} /></label>
-                    <label htmlFor="customName">Description: <textarea type="text" name="description" value={modalParam.description || ""} onChange={e => setModalParam({ ...modalParam, description: e.target.value })} /></label>
+                    <label htmlFor="label">Label: <input type="text" name="label" value={modalParam.customName || ""} onChange={e => setModalParam({ ...modalParam, customName: e.target.value })} /></label>
+                    <label htmlFor="objClass">Class: <input type="text" name="objClass" value={modalParam.objClass || ""} onChange={e => setModalParam({ ...modalParam, objClass: e.target.value })} /></label>
+                    <label htmlFor="description">Description: <textarea type="text" name="description" value={modalParam.description || ""} onChange={e => setModalParam({ ...modalParam, description: e.target.value })} /></label>
                     <button className="button-gray" onClick={onPropertyModalSubmit}>Save</button>
                 </VerticallyCenteredModal> : null
             }

@@ -64,8 +64,39 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
     dispatch(setSchemaData(newSchema));
   };
 
+  // const onUpdateNode = (node) => {
+  //   dispatch(setSchemaData({
+  //     ...schema,
+  //     nodes: [
+  //       ...schema.nodes.filter(item=>item.id!==node.id),
+  //       node
+  //     ]
+  //   }));
+  // };
+
+  const OnDragNode = (node) => {
+    onUpdateSchema({
+      ...schema, 
+      positions: [
+        ...schema.positions.filter(pos=>pos.nodeId!== node.id),
+        {
+          nodeId: node.id,
+          ...node.position
+        }
+      ]
+    });
+  };
+
+  const updatePositions = (positions) => {
+    dispatch(setSchemaData({
+      ...schema,
+      positions
+    }));
+  }
+
   const onSaveSchema = () => {
     saveSchema(schema)(dispatch);
+    setForceUpdate(!forceUpdate);
   };
 
   const onDeleteSchema = (id) => {
@@ -117,7 +148,7 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
           {
             case_error || schema_error ? <ErrorIndicator /> : (
               (case_loading) || (schema_loading && !schemaEmpty) ? <Spinner /> :
-                (!schemaEmpty && !hideSchemaColumn ? <ERD data={schema} onNodeClick={onNodeClick} /> : null)
+                (!schemaEmpty && !hideSchemaColumn ? <ERD data={schema} onNodeClick={onNodeClick} onNodeDrag={OnDragNode} updatePositions={updatePositions} /> : null)
             )
           }
         </div>
@@ -147,6 +178,7 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
                   onUpdateSchema={onUpdateSchema}
                   onSaveSchema={onSaveSchema}
                   onDeleteSchema={onDeleteSchema}
+                  onNodeClick={onNodeClick}
                   format={hideSchemaColumn ? "wide" : "normal"} /> : null)
             )
           }

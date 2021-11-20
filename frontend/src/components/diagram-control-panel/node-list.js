@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "" }) => {
+const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "", onNodeAdd=()=>{} }) => {
 
     const [activeNode, setActiveNode] = useState(selectedNodeId);
 
@@ -28,6 +28,7 @@ const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "" }) => {
                     }
                 </tbody>
             </table>
+            <button className="button-gray" onClick={onNodeAdd}>Add</button>
         </div>
     )
 }

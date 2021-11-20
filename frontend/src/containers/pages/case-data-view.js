@@ -47,7 +47,7 @@ const CaseDataView = () => {
         <div className="page">
             <div ref={headerRef}>
                 <div className="page-header">
-                    Case view
+                    Wide clipboard
                 </div>
                 <div className="search">
                     <CaseSeach caseId={caseId} caseClass={caseClass} onSubmitAction={onSubmitSearch} />

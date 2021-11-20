@@ -22,7 +22,7 @@ const CaseDataView = () => {
         <div>
             <div ref={headerRef}>
                 <div className="page-header">
-                    Case model view
+                    Class Data Model
                 </div>
                 <div className="search">
                     <CaseSeach caseId={caseId} caseClass={caseClass} onSubmitAction={onSubmitSearch} />

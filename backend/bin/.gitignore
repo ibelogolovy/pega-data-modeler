@@ -1,0 +1,21 @@
+.DS_Store
+.gradle
+/.settings
+.project
+.classpath
+/build/
+/node_modules/
+classes
+!gradle/wrapper/gradle-wrapper.jar
+/pega-settings.json
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Local configuration file (sdk path, etc)
+local.properties
+.properties
+
