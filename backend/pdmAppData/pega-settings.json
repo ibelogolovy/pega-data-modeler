@@ -1,1 +1,1 @@
-[{"configName":"Pega-mrt-dev","apiUrl":"http://127.0.0.1:8083","apiLogin":"ilyaxa","apiPassword":"test","active":null}]
+[{"configName":"PegaDev","apiUrl":"http://127.0.0.1:8083/prweb/api/v1","apiLogin":"prpcadmin","apiPassword":"test","active":null},{"configName":"PegaTest","apiUrl":"http://127.0.0.1:8082/prweb/api/v1","apiLogin":"prpcadmin","apiPassword":"test","active":null}]

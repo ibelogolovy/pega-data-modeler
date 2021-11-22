@@ -6,6 +6,7 @@
 /node_modules/
 classes
 !gradle/wrapper/gradle-wrapper.jar
+package-lock.json
 
 ### IntelliJ IDEA ###
 .idea

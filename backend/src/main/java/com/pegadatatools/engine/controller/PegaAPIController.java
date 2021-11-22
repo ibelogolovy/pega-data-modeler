@@ -35,7 +35,7 @@ public class PegaAPIController {
 
     Logger logger = LoggerFactory.getLogger(PegaAPIController.class);
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private RestTemplate restTemplate;
@@ -129,7 +129,8 @@ public class PegaAPIController {
                 .map(item -> {
                     HashMap<String, String> responseMap = new HashMap<>();
                     File schemaFile = new File(pegaSchemaFilePath.concat(item));
-                    PegaSchema schema = null;
+                    PegaSchema schema;
+                    schema = null;
                     try {
                         schema = mapper.readValue(schemaFile, new TypeReference<PegaSchema>(){});
                     } catch (IOException e) {
