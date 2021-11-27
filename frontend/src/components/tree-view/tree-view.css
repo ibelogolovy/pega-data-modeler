@@ -41,9 +41,23 @@
 /* start for compare mode */
 
 .tree .node .property.difference {
-    /* color: white;  */
     background-color:rgba(239, 49, 36, 0.2); 
     border-left: 3px solid #EF3124 ;  
+}
+
+.tree .node .property.green.difference, .tree .node .property.green{
+    background-color:#AFFFB7; 
+    border-left: none ; 
+    user-select: none; 
+}
+
+.tree .node .property.green.difference:hover, .tree .node .property.green:hover {
+    background-color: #AFFFB7;
+}
+
+.tree .node .property.green .value, .tree .node .property.green .name {
+    opacity: 0;
+    user-select: none; 
 }
 
 .tree .node .property.difference > .name {
@@ -51,13 +65,13 @@
 }
 
 .tree .node .page.difference {
-    /* color: white;  */
     border-left: 3px solid #EF3124;  
 }
 
 .tree .node .property.difference:hover {
     background-color: rgba(239, 49, 36, 0.6);
 }
+
 
 /* end for compare mode */
 

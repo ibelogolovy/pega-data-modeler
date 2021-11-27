@@ -1,12 +1,52 @@
 import React, { useState } from 'react';
 
-const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "", onNodeAdd=()=>{} }) => {
+const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "", onNodeAdd=()=>{}, onBatchNodeRemove=()=>{} }) => {
 
     const [activeNode, setActiveNode] = useState(selectedNodeId);
+    const [batch, updateBatch] = useState([]);
+    const [batchMode, updateBachMode] = useState(false);
+
+    const onBatchClick = () => {
+        updateBachMode(true);
+    }
 
     const onNodeSelectInner = (id) => () => {
-        setActiveNode(id);
-        onNodeSelect(id);
+        if(batchMode) {
+            if(batch.includes(id)) {
+                updateBatch(batch.filter(item => item !== id));
+            } else {
+                updateBatch([
+                    ...batch,
+                    id
+                ]);
+            }
+        } else {
+            setActiveNode(id);
+            onNodeSelect(id);
+        }
+    }
+
+    const onBatchRemove = () => {
+        onBatchNodeRemove(batch);
+        updateBachMode(false);
+    }
+
+    const onCancelBatch = () => {
+        updateBatch([]);
+        updateBachMode(false);
+    }
+
+    const getNodeClass = (id) => {
+        let className = "list-item ";
+        if(activeNode === id) {
+            className += " selected"
+        };
+
+        if(batch.includes(id)) {
+            className += " in-batch"
+        };
+
+        return className;
     }
 
     return (
@@ -15,7 +55,7 @@ const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "", onNode
                 <tbody>
                     {
                         nodes.map(({ label, id, customName }, i) => (
-                            <tr key={i} className={activeNode === id ? "list-item selected" : "list-item"} onClick={onNodeSelectInner(id)}>
+                            <tr key={i} className={getNodeClass(id)} onClick={onNodeSelectInner(id)}>
                                 <td>{i + 1}</td>
                                 <td>{label}
                                     {
@@ -28,7 +68,13 @@ const NodeList = ({ nodes, onNodeSelect = () => { }, selectedNodeId = "", onNode
                     }
                 </tbody>
             </table>
-            <button className="button-gray" onClick={onNodeAdd}>Add</button>
+            { batchMode ? <>
+                    <button className="button-gray" onClick={onBatchRemove}>Remove selected</button>
+                    <button className="button-gray" onClick={onCancelBatch}>Cancel</button>
+                </> : <> 
+                    <button className="button-gray" onClick={onNodeAdd}>Add</button>
+                    <button className="button-gray" onClick={onBatchClick}>Remove Nodes</button> 
+                </>}
         </div>
     )
 }

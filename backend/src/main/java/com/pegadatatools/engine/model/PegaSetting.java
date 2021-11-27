@@ -11,6 +11,7 @@ public class PegaSetting implements Comparable {
     @Getter @Setter private String apiUrl;
     @Getter @Setter private String apiLogin;
     @Getter @Setter private String apiPassword;
+    @Getter @Setter private String defaultClass;
     @Getter @Setter private Boolean active;
 
     @Override

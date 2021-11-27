@@ -14,14 +14,14 @@ const NodeProperties = ({ node, format = "normal", onPropertyEdit, onPropertyRem
                         format === "wide" ? <tr>
                             <th>Name</th>
                             <th>Label</th>
-                            <th>Class</th>
+                            <th>Type</th>
                             <th></th>
                             <th></th>
                         </tr> : null
                     }
                     {
                         properties.map((item, i) => {
-                            const { name, customName, objClass } = item;
+                            const { name, customName, type } = item;
                             return (
                                 <tr key={i} className="list-item">
                                     <td>{name}
@@ -33,7 +33,7 @@ const NodeProperties = ({ node, format = "normal", onPropertyEdit, onPropertyRem
                                         format === "wide" ?
                                             <React.Fragment>
                                                 <td>{customName}</td>
-                                                <td>{objClass}</td>
+                                                <td>{type}</td>
                                             </React.Fragment>
                                             : null
                                     }

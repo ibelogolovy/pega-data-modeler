@@ -10,6 +10,7 @@
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+
 .vertically-centered  > .modal-title{
         margin-top: 20%;
 }
@@ -35,15 +36,19 @@
         width: 60%; 
 }
 
-.close-button {
+.modal.small > .modal-content, .modal.small > .modal-title  {
+        width: 30%; 
+}
+
+
+div.modal-title > img.close-button {
         float:right;
         height: 100%;
         width: 30px;
         margin: -7px;
-
 }
 
-.close-button:hover {
+div.modal-title > img.close-button:hover {
         -webkit-transform: scale(1.2);
         -ms-transform: scale(1.2);
         transform: scale(1.2);
@@ -75,4 +80,8 @@
         min-height: 100%;
         padding: 10px;
         font-weight: 500;
+}
+
+.modal-content > label > div {
+        margin: 5px;
 }

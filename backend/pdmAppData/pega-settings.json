@@ -1,1 +1,1 @@
-[{"configName":"PegaDev","apiUrl":"http://127.0.0.1:8083/prweb/api/v1","apiLogin":"prpcadmin","apiPassword":"test","active":null},{"configName":"PegaTest","apiUrl":"http://127.0.0.1:8082/prweb/api/v1","apiLogin":"prpcadmin","apiPassword":"test","active":null}]
+[{"configName":"PegaTest2","apiUrl":"http://127.0.0.1:8083","apiLogin":"prpcadmin","apiPassword":"test","defaultClass":"Work-Case-Test","active":null}]

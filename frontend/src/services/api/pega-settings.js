@@ -15,16 +15,16 @@ const getPegaSetting = () => {
         .get(REACT_APP_API_URL+"/pegasetting/")
         .then( response => {
             return response.data.map((value)=>{
-                return {login: value.apiLogin, password: value.apiPassword, url: value.apiUrl, name: value.configName}});
+                return {login: value.apiLogin, password: value.apiPassword, url: value.apiUrl, name: value.configName, defaultClass: value.defaultClass}});
         })
         .catch( error => {
             return Promise.reject(getError(error));
         })
 }
 
-const addPegaSetting = ({url, login, password, active, name}) => {
+const addPegaSetting = ({url, login, password, active, name, defaultClass}) => {
     return axios
-        .post(REACT_APP_API_URL+"/pegasetting/", {apiUrl: url, apiLogin: login, apiPassword: password, configName: name}, {headers: headers})
+        .post(REACT_APP_API_URL+"/pegasetting/", {apiUrl: url, apiLogin: login, apiPassword: password, configName: name, defaultClass: defaultClass}, {headers: headers})
 }
 
 const deletePegaSetting = (name) => {

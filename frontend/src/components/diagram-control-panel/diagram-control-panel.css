@@ -136,4 +136,9 @@
     width: 60px;
 }
 
+.diagram-control-buttons .description-block .list-item.in-batch {
+    background-color: #EF3124;
+    cursor: pointer;
+}
+
   /* erd end */

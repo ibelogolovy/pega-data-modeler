@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actionTypes';
-import { formReferenceList } from '../components/utils/pega-object';
-import { diffObjects } from '../components/utils/diff-objects.js';
+import { formReferenceList, addMissignProperties } from '../components/utils/pega-object';
+import { diffObjects } from '../components/utils/objects.js';
 
 
 
@@ -29,15 +29,18 @@ const updateSelectedCase= (state, action) => {
       return {
         ...state.selectedCase,
         comparedDelta: [],
+        comparedData: {},
         data: action.payload,
         loading: false,
         error: null
       };
 
     case actionTypes.FETCH_COMPARED_CASE_SUCCESS:
+      let newData = addMissignProperties(action.payload, state.selectedCase.data);
       return {
         ...state.selectedCase,
-        comparedData: action.payload,
+        data: newData,
+        comparedData: addMissignProperties(newData, action.payload),
         comparedDelta: formReferenceList(diffObjects(state.selectedCase.data, action.payload)),
         loading: false,
         error: null

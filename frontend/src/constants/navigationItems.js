@@ -26,7 +26,7 @@ const navigationItems = [
         icon: clipboardComparator,
         role: "tool",
         help: "Compares values in a clipboard",
-        link: "/clipboard/compare",
+        link: "/clipboard-compare",
         dependOn: "activeSettingName"
     },
     {
@@ -34,7 +34,7 @@ const navigationItems = [
         icon: modelClassIcon,
         role: "tool",
         help: "Class Model",
-        link: "/model",
+        link: "/model-class",
         dependOn: "activeSettingName"
     },
     {
@@ -42,7 +42,7 @@ const navigationItems = [
         icon: modelIcon,
         role: "tool",
         help: "Class Model",
-        link: "/model/data",
+        link: "/model-data",
         dependOn: "activeSettingName"
     }
 ];

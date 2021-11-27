@@ -16,7 +16,7 @@ const HomeContent = () => {
     const pegaSetting = useSelector(state => state.pegaSetting.data);
     const pegaSettingLoading = useSelector(state => state.pegaSetting.loading);
 
-    const [cookies, setCookie] = useCookies(['activeSettingName', 'activeSettingCredential', 'activeSettingUrl']);
+    const [cookies, setCookie] = useCookies(['activeSettingName', 'activeSettingCredential', 'activeSettingUrl', 'defaultWorkClass']);
 
     const dispatch = useDispatch();
 
@@ -33,6 +33,7 @@ const HomeContent = () => {
             setCookie('activeSettingName', data.name, { path: '/' });
             setCookie('activeSettingCredential', btoa(data.login + ":" + data.password), { path: '/' });
             setCookie('activeSettingUrl', data.url, { path: '/' });
+            setCookie('defaultWorkClass', data.defaultClass, { path: '/' });
         }
     };
 
@@ -44,6 +45,7 @@ const HomeContent = () => {
                 setCookie('activeSettingName', pegaSetting[0].name, { path: '/' });
                 setCookie('activeSettingCredential', btoa(pegaSetting[0].login + ":" + pegaSetting[0].password), { path: '/' });
                 setCookie('activeSettingUrl', pegaSetting[0].url, { path: '/' });
+                setCookie('defaultWorkClass', pegaSetting[0].defaultClass, { path: '/' });
             }
         }
     };
@@ -74,7 +76,7 @@ const HomeContent = () => {
                 </div>
             </div>
             <div className="info">
-                <div className="float-left">Authors: Ilya Belogolovy (ibelogolovy)</div>
+                <div className="float-left">Author: Ilya Belogolovy (ibelogolovy)</div>
                 <div className="float-right"></div>
             </div>
         </div>

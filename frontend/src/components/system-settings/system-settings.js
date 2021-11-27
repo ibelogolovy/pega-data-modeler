@@ -13,7 +13,7 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
 
     useEffect(() => {
         updateFormData(state => settings.filter((value) => value.active === true).length > 0 ?
-            settings.filter((value) => value.active === true)[0] : (settings.length > 0 ? settings[0] : { login: "", password: "", url: "", name: "", key: "" }));
+            settings.filter((value) => value.active === true)[0] : (settings.length > 0 ? settings[0] : { login: "", password: "", url: "", name: "", key: "", defaultClass: "" }));
     }, [settings]);
 
     const onSubmitForm = (e) => {
@@ -86,6 +86,18 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                             width='available'
                             theme='alfa-on-white'
                             value={formData.password}
+                            onChange={(value, event) => handleChange(value, event)}
+                        />
+                    </FormField>
+                    <FormField>
+                        <Input
+                            label='Default Work Class'
+                            name="defaultClass"
+                            placeholder='Enter Default Work Class'
+                            size='m'
+                            width='available'
+                            theme='alfa-on-white'
+                            value={formData.defaultClass}
                             onChange={(value, event) => handleChange(value, event)}
                         />
                     </FormField>

@@ -33,7 +33,6 @@ public class PegaSettingController {
 
     private void refreshSettings() throws IOException {
         logger.debug("[refreshSettings] Fetch setting from file system");
-//        ObjectMapper mapper = new ObjectMapper();
         boolean empty = !pegaSettingFilePath.exists() || pegaSettingFilePath.length() == 0;
         if(!empty) {
             settings = mapper.readValue(pegaSettingFilePath, new TypeReference<Set<PegaSetting>>(){});

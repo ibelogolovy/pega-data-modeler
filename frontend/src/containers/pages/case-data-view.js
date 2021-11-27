@@ -5,6 +5,8 @@ import CaseSeach from '../../components/case-search';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useCookies } from 'react-cookie';
+
 import { caseParamSetted, fetchPegaSetting } from '../../actions';
 
 const CaseDataView = () => {
@@ -12,7 +14,11 @@ const CaseDataView = () => {
     const dispatch = useDispatch();
     const headerRef = useRef(null);
 
+    const [cookies] = useCookies(['defaultWorkClass']);
+
     const { caseId, caseClass } = useSelector(state => state.selectedCase.params);
+
+    const caseClassWithDefault = !caseClass || caseClass === "" ? cookies.defaultWorkClass : caseClass;
 
     useEffect(() => {
         fetchPegaSetting()(dispatch);
@@ -50,11 +56,11 @@ const CaseDataView = () => {
                     Wide clipboard
                 </div>
                 <div className="search">
-                    <CaseSeach caseId={caseId} caseClass={caseClass} onSubmitAction={onSubmitSearch} />
+                    <CaseSeach caseId={caseId} caseClass={caseClassWithDefault} onSubmitAction={onSubmitSearch} />
                 </div>
             </div>
             {
-                caseId && caseClass ? <WideClipboard caseKey={caseId} caseClass={caseClass} /> : null
+                caseId && caseClass ? <WideClipboard caseKey={caseId} caseClass={caseClassWithDefault} /> : null
             }
         </div>
 

@@ -24,7 +24,7 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
   const [hideSchemaColumn, setHideSchemaColumn] = useState(false);
   const [expandFullscreen, setExpandFullscreen] = useState(false);
   const [seletedNode, updateSeletedNode] = useState(null);
-  const [selectedSchema, setSelectedSchema] = useState(null);
+  const [selectedSchema, setSelectedSchema] = useState(schema ? schema.id : null);
 
   const schema_loading = useSelector(state => state.pegaSchema.loading);
   const schema_error = useSelector(state => state.pegaSchema.error);
@@ -105,11 +105,11 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
   };
 
   useEffect(() => {
-    if (id.trim() !== "" && activeSettingUrl !== "") {
+    if (caseClass.trim() !== "" && caseKey.trim() !== ""   && activeSettingUrl !== "") {
       setSelectedSchema("");
       postNewSchemaFromCase(id, activeSettingUrl, activeSettingCredential)(dispatch);
     }
-  }, [id, activeSettingUrl, activeSettingCredential, dispatch]);
+  }, [id, caseClass, caseKey, activeSettingUrl, activeSettingCredential, dispatch]);
 
   useEffect(() => {
     fetchSchemaList(dispatch);

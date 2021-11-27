@@ -53,13 +53,13 @@ const App = () => {
             path="/clipboard"
             component={CaseDataView} />
           <Route exact
-            path="/clipboard/compare"
+            path="/clipboard-compare"
             component={CaseDataComparator} />
           <Route exact
-            path="/model"
+            path="/model-class"
             component={CaseClassModel} />
           <Route
-            path="/model/data"
+            path="/model-data"
             component={CaseDataModel} />
         </Switch>
       </div>

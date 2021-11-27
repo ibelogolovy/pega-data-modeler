@@ -38,7 +38,7 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
 
     const [visible, setVisible] = useState(name === "");
 
-    const isPage = typeof data === 'object';
+    const isPage = typeof data === 'object' && data;
     const isPageList = Array.isArray(data);
 
     const nodeName = getPegaName(prefix, name);
@@ -78,7 +78,7 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
 
     if (!isPage) {
         return (
-            <div className={"node property " + searchedClass + " " + getNodeStyle(nodeRef)}
+            <div className={"node property " + searchedClass + " " + getNodeStyle(nodeRef, data)}
                 onClick={onClickAction} path={nodeRef}>
                 <div className="name "> {nodeName}</div>
                 <div className="value ">  {data}</div>

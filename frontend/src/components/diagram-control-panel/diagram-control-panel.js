@@ -23,7 +23,19 @@ const linkTypes = [
     }
 ];
 
-const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, selectedNode, onUpdateSchema = () => { }, onSaveSchema = () => { }, onDeleteSchema = () => { }, format = "normal",onNodeClick =()=>{} }) => {
+const propertyTypes = [
+    {label: "ARRAY", value: "ARRAY"},
+    {label: "BINARY", value: "BINARY"},
+    {label: "BOOLEAN", value: "BOOLEAN"},
+    {label: "MISSING", value: "MISSING"},
+    {label: "NULL", value: "NULL"},
+    {label: "NUMBER", value: "NUMBER"},
+    {label: "OBJECT", value: "OBJECT"},
+    {label: "POJO", value: "POJO"},
+    {label: "STRING", value: "STRING"}
+];
+
+const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [], positions: []}, selectedNode, onUpdateSchema = () => { }, onSaveSchema = () => { }, onDeleteSchema = () => { }, format = "normal",onNodeClick =()=>{} }) => {
 
     const { name, nodes, links } = schema;
 
@@ -34,6 +46,7 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
     const [showPropertyModal, setShowPropertyModal] = useState(false);
     const [showNodeModal, setShowNodeModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
     // const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const [activeNode, setActiveNode] = useState(selectedNode);
@@ -88,9 +101,9 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         onUpdateSchema({
             ...schema,
             nodes: [
-                ...schema.nodes.slice(0, nodeIdx),
+                ...nodes.slice(0, nodeIdx),
                 newNodeObj.node,
-                ...schema.nodes.slice(nodeIdx + 1)
+                ...nodes.slice(nodeIdx + 1)
             ],
             links: [
                 ...newNodeObj.links,
@@ -100,18 +113,27 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         setActiveNode(newNodeObj);
     };
 
-    const onRemoveNode = () => {
-        const nodeIdx = nodes.findIndex(item => item.id === selectedNodeId);
-        const newLinks = links.filter((item) => item.source !== selectedNodeId && item.target !== selectedNodeId);
+    const onRemoveNode = (idx) => {
+        const nodeIdx = idx ? idx : nodes.findIndex(item => item.id === selectedNodeId);
         onUpdateSchema({
             ...schema,
             nodes: [
-                ...schema.nodes.slice(0, nodeIdx),
-                ...schema.nodes.slice(nodeIdx + 1)
+                ...nodes.slice(0, nodeIdx),
+                ...nodes.slice(nodeIdx + 1)
             ],
-            links: newLinks
+            links: links.filter((item) => item.source !== selectedNodeId && item.target !== selectedNodeId),
+            positions: schema.positions.filter(item => item.nodeId !== selectedNodeId)
         });
         setActiveNode(null);
+    };
+
+    const onBatchNodeRemove = (idxs=[]) => {
+        onUpdateSchema({
+            ...schema,
+            nodes: nodes.filter(item => !idxs.includes(item.id)),
+            links: links.filter(item => !idxs.includes(item.source) && !idxs.includes(item.target)),
+            positions: schema.positions.filter(item => !idxs.includes(item.nodeId))
+        });
     };
 
     const onLinkRemove = (idx) => (e) => {
@@ -305,8 +327,14 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
         setActiveNode({ node: selectedNode, links: selectedLinks });
     };
 
-    const onClickDelete = () => {
+
+    const onRemoveSchema = () => {
+        setShowRemoveModal(false);
         onDeleteSchema(schema.id);
+    };
+
+    const toggleRemoveModal = () => {
+        setShowRemoveModal(!showRemoveModal);
     };
 
     return (
@@ -318,14 +346,15 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                     <button className="button-gray" onClick={onSaveSchema}>Save</button>
                     {
                         schema.id ?
-                            <button className="button-gray" onClick={onClickDelete}>Remove</button> : null
+                            <button className="button-gray" onClick={toggleRemoveModal}>Remove</button> : null
                     }
                 </div>
                 {!activeNode || format === "wide" ?
                     <NodeList nodes={nodes}
                         onNodeSelect={onNodeSelect}
                         selectedNodeId={selectedNodeId}
-                        onNodeAdd={onNodeAdd} /> : null
+                        onNodeAdd={onNodeAdd} 
+                        onBatchNodeRemove = {onBatchNodeRemove} /> : null
                 }
             </div>
             <div className="column">
@@ -393,7 +422,14 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                 <VerticallyCenteredModal header={"Edit property " + modalField} onClose={onModalClose}>
                     <label htmlFor="name">Name: <input type="text" name="name" value={modalParam.name || ""} onChange={e => setModalParam({ ...modalParam, name: e.target.value })} /></label>
                     <label htmlFor="label">Label: <input type="text" name="label" value={modalParam.customName || ""} onChange={e => setModalParam({ ...modalParam, customName: e.target.value })} /></label>
-                    <label htmlFor="objClass">Class: <input type="text" name="objClass" value={modalParam.objClass || ""} onChange={e => setModalParam({ ...modalParam, objClass: e.target.value })} /></label>
+                    <label htmlFor="type">Type:
+                    <Select
+                            name="type"
+                            options={propertyTypes}
+                            defaultValue={propertyTypes.find(item => item.value === modalParam.type)}
+                            onChange={option => setModalParam({ ...modalParam, type: option.value })}
+                            isSearchable={false} />
+                    </label>
                     <label htmlFor="description">Description: <textarea type="text" name="description" value={modalParam.description || ""} onChange={e => setModalParam({ ...modalParam, description: e.target.value })} /></label>
                     <button className="button-gray" onClick={onPropertyModalSubmit}>Save</button>
                 </VerticallyCenteredModal> : null
@@ -420,6 +456,15 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [] }, sele
                             onChange={(option) => option && setModalParam({ ...modalParam, value: option.id })} />
                     </label>
                     <button className="button-gray" onClick={onLinkModalSubmit}>Save</button>
+                </VerticallyCenteredModal> : null
+            }
+
+            {
+                showRemoveModal ? 
+                <VerticallyCenteredModal header={"Confirmation"} onClose={toggleRemoveModal} format="small">
+                    <div>Do you really want to remove schema {name}?</div>
+                    <button className="button-gray" onClick={onRemoveSchema}>Yes</button>
+                    <button className="button-gray" onClick={toggleRemoveModal}>No</button>
                 </VerticallyCenteredModal> : null
             }
 
