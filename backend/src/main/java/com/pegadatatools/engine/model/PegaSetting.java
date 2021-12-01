@@ -2,15 +2,16 @@ package com.pegadatatools.engine.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import javax.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
 public class PegaSetting implements Comparable {
 
-    @Getter @Setter private String configName;
-    @Getter @Setter private String apiUrl;
-    @Getter @Setter private String apiLogin;
-    @Getter @Setter private String apiPassword;
+    @NotBlank @Getter @Setter private String configName;
+    @NotBlank @Getter @Setter private String apiUrl;
+    @NotBlank @Getter @Setter private String apiLogin;
+    @NotBlank @Getter @Setter private String apiPassword;
     @Getter @Setter private String defaultClass;
     @Getter @Setter private Boolean active;
 
