@@ -14,14 +14,18 @@ const WideClipdoard = ({ caseKey, caseClass }) => {
 
   const [selectedProperty, setSelectedProperty] = useState("");
   const [selectedPropClass, setSelectedPropClass] = useState("");
-
+  const [selectedDiagram, setSelectedDiagram] = useState(null);
+  
+  const onChangeDiagram= (diagram) => {
+    setSelectedDiagram(diagram);
+  }
   const dispatch = useDispatch();
 
   const onClickNode = ({ nodeName, objClass, nodeRef }) => {
     setSelectedProperty(nodeName);
     setSelectedPropClass(objClass);
     dispatch(caseParamSetted({ reference: nodeRef }));
-  }
+  };
 
   return (
     <div className="wide-clipboard">
@@ -30,7 +34,12 @@ const WideClipdoard = ({ caseKey, caseClass }) => {
       </div>
       <div className="property-explorer">
         {
-             selectedProperty!=="" && selectedPropClass!=="" ? <PropertyExplorer property={selectedProperty} appliesToClass={selectedPropClass} /> : null
+             selectedProperty!=="" && selectedPropClass!=="" ? 
+                        <PropertyExplorer property={selectedProperty} 
+                                          appliesToClass={selectedPropClass} 
+                                          diagram={selectedDiagram}
+                                          onChangeDiagram={onChangeDiagram}/> 
+                        : null
         }
       </div>
     </div>

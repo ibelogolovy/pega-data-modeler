@@ -15,6 +15,14 @@ const getPegaName = (prefix, name) => {
     return name;
 }
 
+/* Return parent node from object structure
+   by pega reference */
+const getParentPageName = (ref) => {
+    const regex = /[(]\d+[)]/ig;
+    let parts = ref.replace(regex,"").split('.');
+    return parts.length > 1 ? parts[parts.length - 2] : parts[parts.length - 1];
+}
+
 /* form pega reference array from json object */
 const formReferenceList = (obj, reference = "", result = []) => {
     Object.keys(obj || {}).forEach(key => {
@@ -83,5 +91,6 @@ const addMissignProperties = (obj1, obj2) => {
 export {
     getPegaName,
     formReferenceList,
-    addMissignProperties
+    addMissignProperties,
+    getParentPageName
 };

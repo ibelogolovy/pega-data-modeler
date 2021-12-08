@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Select from 'react-select'
+import Select from 'react-select';
 
 import { VerticallyCenteredModal } from '../modal-dialog';
 

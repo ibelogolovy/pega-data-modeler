@@ -1,0 +1,42 @@
+.property-diagram-view {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(11,31,53,.1);
+    padding: 2em;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    box-shadow:0 6px 14px rgba(11,31,53,.15);
+}
+
+.property-diagram-view h2 {
+    margin-top:0;
+}
+
+.property-diagram-view .field {
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+.property-diagram-view .field .name {
+      width: 20%;
+      font-weight: 400;
+  }
+  
+.property-diagram-view .field .value {
+      word-wrap: break-word; 
+      width: 80%;
+      font-weight: 300;
+  }
+
+
+.property-diagram-view  .button-gray {
+    margin-left: 20px;
+}
+
+.property-diagram-view .field-group {
+    width: 100%;
+    border: 1px solid rgba(11,31,53,.1);
+    padding: 15px;
+}

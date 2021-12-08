@@ -25,14 +25,15 @@ const CaseDataView = () => {
     });
 
     const hideHeaderOnScroll = () => {
+        if(headerRef.current) {
+            const distanceY = window.pageYOffset || document.documentElement.scrollTop;
+            const shrinkOn = headerRef.current.className === "hidden" ? 0 : 190;
 
-        const distanceY = window.pageYOffset || document.documentElement.scrollTop;
-        const shrinkOn = headerRef.current.className === "hidden" ? 0 : 190;
-
-        if (distanceY > shrinkOn) {
-            headerRef.current.className = "hidden";
-        } else {
-            headerRef.current.className = "";
+            if (distanceY > shrinkOn) {
+                headerRef.current.className = "hidden";
+            } else {
+                headerRef.current.className = "";
+            }
         }
     };
 

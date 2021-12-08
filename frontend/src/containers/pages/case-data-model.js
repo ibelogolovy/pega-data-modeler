@@ -20,8 +20,6 @@ const CaseDataView = () => {
 
     const caseClassWithDefault = !caseClass || caseClass === "" ? cookies.defaultWorkClass : caseClass;
 
-    console.log(caseClassWithDefault);
-
     const onSubmitSearch = ({ caseId, caseClass }) => {
         dispatch(caseParamSetted({ caseId, caseClass }));
     }
