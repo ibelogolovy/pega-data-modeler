@@ -55,9 +55,11 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
   };
 
   const onSelectDiagram = (id) => (e) => {
-    fetchSchema(id)(dispatch);
-    setSelectedSchema(id);
-    updateSeletedNode(null);
+    if(selectedSchema !== id && !schema_loading) {
+      fetchSchema(id)(dispatch);
+      setSelectedSchema(id);
+      updateSeletedNode(null);
+    }
   };
 
   const onUpdateSchema = (newSchema) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { copyIcon } from '../../constants/controlIcons';
 
@@ -14,6 +14,10 @@ const PropertyView = ({ data, reference }) => {
             pxCreateOpName } = data;
 
    const onCopy = () => navigator.clipboard.writeText(reference);
+
+   useEffect(()=>{
+
+   }, [data])
 
     return (
     <div className="property-view">

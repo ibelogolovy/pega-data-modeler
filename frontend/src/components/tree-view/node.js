@@ -77,13 +77,15 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
     }
 
     if (!isPage) {
-        return (
-            <div className={"node property " + searchedClass + " " + getNodeStyle(nodeRef, data)}
-                onClick={onClickAction} path={nodeRef}>
-                <div className="name "> {nodeName}</div>
-                <div className="value ">  {data}</div>
-            </div>
-        );
+        if(searchedClass !== "hidden") {
+            return (
+                <div className={"node property " + searchedClass + " " + getNodeStyle(nodeRef, data)}
+                    onClick={onClickAction} path={nodeRef}>
+                    <div className="name "> {nodeName}</div>
+                    <div className="value ">  {data}</div>
+                </div>
+            );
+        } else return <></>;
     }
 
     objClass = data["pxObjClass"];
@@ -98,7 +100,7 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
                 {nodeName}
             </div>
             <div className={visible ? "" : "hidden"}>
-                {
+                {visible || searchString !== "" ?
                     Object.keys(data).map((value, i) => {
                         return <Node key={i}
                             data={data[value]}
@@ -112,7 +114,7 @@ const Node = ({ name = "", data = {}, prefix = "", reference = "", objClass = ""
                             onExpandNode={onExpandNode}
                             getNodeStyle={getNodeStyle} />;
                     })
-                }
+                : null}
             </div>
         </div>
 

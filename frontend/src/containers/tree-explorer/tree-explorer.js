@@ -9,7 +9,7 @@ import { fetchCase, fetchComparedCase } from '../../actions';
 import { useCookies } from 'react-cookie';
 
 
-const TreeExplorer = ({ caseKey = "", caseClass = "", onClickNode = () => { }, onExpandNode = () => { }, compareMode = false, getNodeStyle = ()=>{} }) => {
+const TreeExplorer = ({ caseKey = "", caseClass = "", onClickNode = () => { }, onExpandNode = () => { }, compareMode = false, getNodeStyle = ()=>"" }) => {
 
   const data = useSelector(state => state.selectedCase.data);
   const comparedData = useSelector(state => state.selectedCase.comparedData);
@@ -24,7 +24,7 @@ const TreeExplorer = ({ caseKey = "", caseClass = "", onClickNode = () => { }, o
 
   /* get case data with pega api */
   useEffect(() => {
-    if (id !== "") {
+    if (id !== "" ) {
       if (compareMode)
         fetchComparedCase(id, activeSettingUrl, activeSettingCredential)(dispatch);
       else

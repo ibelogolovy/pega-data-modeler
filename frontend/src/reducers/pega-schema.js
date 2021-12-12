@@ -7,7 +7,7 @@ const updatePegaSetting = (state, action) => {
         return {
           data: {},
           schemaList: [],
-          loading: true,
+          loading: false,
           error: null,
           listLoading: false,
           listError: null

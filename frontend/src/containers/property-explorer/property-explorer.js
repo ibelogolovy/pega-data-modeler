@@ -18,7 +18,7 @@ import './property-explorer.css';
 const PropertyExplorer = ({ property, appliesToClass, onChangeDiagram, diagram }) => {
 
   const [diagramProperties, setDiagramProperties] = useState([]);
-  const [diagramNodes, setDiagramNodes] = useState([]);
+  const [diagramNodes, ] = useState([]);
 
   const dispatch = useDispatch();
 

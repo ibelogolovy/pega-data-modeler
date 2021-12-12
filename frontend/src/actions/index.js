@@ -29,8 +29,8 @@ const caseError = (error) => {
 const fetchCase = (id, url, credentials) => (dispatch) => {
     dispatch(caseRequested());
     getCase(id, url, credentials)
-      .then((data) => dispatch(caseLoaded(data)))
-      .catch((error) => dispatch(caseError(error)));
+    .then((data) => dispatch(caseLoaded(data)))
+    .catch((error) =>  dispatch(caseError(error)));
 };
 
 const caseComparedLoaded = (caseData) => {
