@@ -127,7 +127,7 @@ const ModelDataExplorer = ({ caseKey = "", caseClass = "" }) => {
           {
             schema_list_error ? <ErrorIndicator /> : (
               schema_list_loading ? <Spinner /> : <div className="model-list-inner">
-                <h3>Existing model</h3>
+                <h3>Saved</h3>
                 <table>
                   <tbody>
                     {

@@ -342,7 +342,7 @@ const DiagramControlPanel = ({ schema = { id: null, nodes: [], links: [], positi
             <div className="column">
                 <div className="schema-description description-block">
                     <h3 className="description-title">Schema</h3>
-                    <div className="row" >Name: {name} <img src={pencilIcon} alt="edit" onClick={showModalWithOneField("name", name)} /></div>
+                    <div className="row" ><div className="field">Name:</div> <div className="value">{name}</div> <img src={pencilIcon} alt="edit" onClick={showModalWithOneField("name", name)} /></div>
                     <button className="button-gray" onClick={onSaveSchema}>Save</button>
                     {
                         schema.id ?

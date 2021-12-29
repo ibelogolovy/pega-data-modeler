@@ -103,7 +103,7 @@ const SystemSettings = ({ settings, activeSetting, onSubmit, onRemove }) => {
                     </FormField>
                     <FormField>
                         <div className="control-buttons">
-                            <Button theme="alfa-on-color" size="m" type='submit' >Save and select</Button>
+                            <Button theme="alfa-on-color" size="m" type='submit' >Save</Button>
                             {/* <Button theme="alfa-on-color" size="m" 
                                 onClick ={ ()=>updateFormData({login:"", password:"", url:"", name: ""}) }>
                                     Reset
