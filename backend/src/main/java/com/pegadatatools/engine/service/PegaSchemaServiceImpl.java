@@ -3,13 +3,10 @@ package com.pegadatatools.engine.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pegadatatools.engine.controller.PegaAPIController;
 import com.pegadatatools.engine.model.PegaSchema;
 import com.pegadatatools.engine.utils.fileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -25,8 +21,6 @@ import java.util.stream.Stream;
 @Slf4j
 @RequiredArgsConstructor
 public class PegaSchemaServiceImpl implements PegaSchemaService {
-
-    Logger logger = LoggerFactory.getLogger(PegaAPIController.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -36,7 +30,7 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
     @Override
     public PegaSchema createSchema(JsonNode requestBody, HttpServletResponse response) {
         try{
-            logger.debug("[createSchema] Create schema = " + requestBody.toString());
+            log.debug("[createSchema] Create schema = " + requestBody.toString());
 
             String schemaName = requestBody.get("name").asText();
             JsonNode caseData = requestBody.get("case");
@@ -45,7 +39,6 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             } else {
 
-                Iterator<Map.Entry<String, JsonNode>> keyIterator = caseData.fields();
                 PegaSchema newSchema = new PegaSchema(schemaName);
 
                 newSchema.recursivelyGenerateFromJson(caseData, "pyWorkPage", null);
@@ -58,7 +51,7 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
         }
         catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            logger.error(ex.getStackTrace().toString());
+            log.error(ex.getMessage());
         }
         return null;
     }
@@ -70,7 +63,7 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
             if(requestBody.getId() == null) {
                 requestBody.generateId();
             }
-            logger.debug("[updateSchema] Update schema = " + requestBody.getName()+ ", id = "+ requestBody.getId());
+            log.debug("[updateSchema] Update schema = " + requestBody.getName()+ ", id = "+ requestBody.getId());
             File schemaFile = new File(pegaSchemaFilePath.concat(requestBody.getId().toString().concat(".json")));
             mapper.writeValue(schemaFile, requestBody);
             responseMap.put("id", requestBody.getId().toString());
@@ -79,7 +72,7 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
         }
         catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            logger.error(ex.getStackTrace().toString());
+            log.error(ex.getMessage());
         }
         return responseMap;
     }
@@ -96,10 +89,12 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
                         schema = mapper.readValue(schemaFile, new TypeReference<PegaSchema>(){});
                     } catch (IOException e) {
                         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        logger.error(e.getStackTrace().toString());
+                        log.error(e.getMessage());
                     }
-                    responseMap.put("id",  item.replace(".json", ""));
-                    responseMap.put("name",  schema.getName());
+                    if(schema != null) {
+                        responseMap.put("id",  item.replace(".json", ""));
+                        responseMap.put("name",  schema.getName());
+                    }
                     return responseMap;
                 });
     }
@@ -118,7 +113,7 @@ public class PegaSchemaServiceImpl implements PegaSchemaService {
         }
         catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            logger.error(ex.getStackTrace().toString());
+            log.error(ex.getMessage());
         }
         return null;
     }

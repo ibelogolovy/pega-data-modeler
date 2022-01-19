@@ -1,5 +1,6 @@
 package com.pegadatatools.engine.controller;
 
+import com.pegadatatools.engine.service.PegaSettingService;
 import com.pegadatatools.engine.service.PegaSettingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +17,7 @@ import com.pegadatatools.engine.model.PegaSetting;
 @RequestMapping("/api/pegasetting")
 public class PegaSettingController {
 
-    private final PegaSettingServiceImpl pegaSettingService;
+    private final PegaSettingService pegaSettingService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void updateSetting(@Validated @RequestBody PegaSetting requestBody, HttpServletResponse response) {

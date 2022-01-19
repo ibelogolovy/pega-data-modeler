@@ -21,8 +21,8 @@ public class ApplicationConfig {
     @Bean
     public RestTemplate restTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(6000);
-        factory.setReadTimeout(6000);
+        factory.setConnectTimeout(15000);
+        factory.setReadTimeout(15000);
         RestTemplate template = new RestTemplate(factory);
         template.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));

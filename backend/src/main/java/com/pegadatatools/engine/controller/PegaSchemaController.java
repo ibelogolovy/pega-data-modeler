@@ -2,7 +2,7 @@ package com.pegadatatools.engine.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.pegadatatools.engine.model.PegaSchema;
-import com.pegadatatools.engine.service.PegaSchemaServiceImpl;
+import com.pegadatatools.engine.service.PegaSchemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @RequestMapping("/api/pega/schema")
 public class PegaSchemaController {
 
-    private final PegaSchemaServiceImpl pegaSchemaService;
+    private final PegaSchemaService pegaSchemaService;
 
     @RequestMapping(method = RequestMethod.POST)
     public PegaSchema createSchema(@RequestBody JsonNode requestBody, HttpServletResponse response) {
